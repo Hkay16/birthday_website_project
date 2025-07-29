@@ -1332,7 +1332,7 @@ body.terminal-hidden {
 .terminal-body {
   flex: 1;
   background: #0a0a0a;
-  font-size: clamp(11px, 3.2vw, 13px); /* Even smaller for mobile */
+  font-size: 12px; /* Smaller desktop size */
   line-height: 1.6;
   overflow-y: auto; /* Only vertical scrolling allowed */
   overflow-x: hidden; /* Prevent horizontal scroll */
@@ -1342,6 +1342,14 @@ body.terminal-hidden {
   -webkit-overflow-scrolling: touch;
   /* Prevent pull-to-refresh on mobile */
   overscroll-behavior: contain;
+}
+
+/* Mobile - smaller font */
+@media (max-width: 768px) {
+  .terminal-body {
+    font-size: 10px;
+    line-height: 1.5;
+  }
 }
 
 .terminal-controls {
@@ -1381,9 +1389,17 @@ body.terminal-hidden {
   display: inline-block;
   background: #00ff41;
   animation: blink 1s infinite;
-  width: clamp(5px, 1.8vw, 7px); /* Even smaller cursor to match smaller text */
-  height: clamp(11px, 3vw, 14px);
+  width: 6px; /* Smaller cursor for smaller text */
+  height: 12px;
   margin-left: clamp(8px, 2vw, 12px); /* Match the terminal output padding */
+}
+
+/* Mobile cursor */
+@media (max-width: 768px) {
+  .terminal-cursor {
+    width: 5px;
+    height: 10px;
+  }
 }
 
 .skip-btn {
@@ -1795,7 +1811,7 @@ body.terminal-hidden {
 @media (max-width: 480px) {
   /* Extra small phones */
   .terminal-body {
-    font-size: 11px; /* Even smaller text for better fit */
+    font-size: 9px; /* Very small for tiny phones */
     line-height: 1.4; /* Tighter line spacing */
   }
   
@@ -1835,10 +1851,7 @@ body.terminal-hidden {
     font-size: 16px; /* Ensure text is readable */
   }
   
-  .terminal-body {
-    font-size: clamp(10px, 3vw, 12px); /* Even smaller range for mobile */
-    line-height: 1.5; /* Good readability */
-  }
+
   
   .terminal-title {
     font-size: clamp(10px, 2.8vw, 12px); /* Smaller terminal header */
@@ -1894,7 +1907,7 @@ body.terminal-hidden {
   }
   
   .terminal-body {
-    font-size: 11px;
+    font-size: 9px;
   }
   
 
@@ -2091,6 +2104,22 @@ body,
   overflow-x: hidden; /* Prevent horizontal scrolling */
   height: 100vh; /* Full viewport height */
   overscroll-behavior: contain; /* Prevent pull-to-refresh and bounce */
+}
+
+/* Main hub with extra bottom padding for Safari navigation */
+#main-hub {
+  padding-bottom: clamp(4rem, 8vw, 6rem); /* Extra bottom padding for Safari UI */
+}
+
+/* Mobile - even more bottom padding for Safari */
+@media (max-width: 768px) {
+  #main-hub {
+    padding-bottom: 5rem; /* Ensure content isn't hidden by Safari bottom bar */
+  }
+  
+  #module-views {
+    padding-bottom: 5rem; /* Same for individual module views */
+  }
 }
 
 /* Ensure module cards maintain dark theme */
