@@ -17,25 +17,27 @@
     <!-- Terminal Loading Screen -->
     <div id="terminal" class="terminal-container">
       <div class="terminal-header">
-        <div class="terminal-controls">
-          <span class="control red"></span>
-          <span class="control yellow"></span>
-          <span class="control green"></span>
+        <div class="left-section">
+          <div class="terminal-controls">
+            <span class="control red"></span>
+            <span class="control yellow"></span>
+            <span class="control green"></span>
+          </div>
+          <span class="terminal-title">System Analysis Terminal</span>
         </div>
-        <span class="terminal-title">System Analysis Terminal</span>
+        <button
+          id="skip-btn"
+          class="skip-btn"
+          onclick="skipToNext()"
+          title="Skip animation (or press S/Space)"
+        >
+          Skip →
+        </button>
       </div>
       <div class="terminal-body">
         <div id="terminal-output"></div>
         <div class="terminal-cursor">_</div>
       </div>
-      <button
-        id="skip-btn"
-        class="skip-btn"
-        onclick="skipToNext()"
-        title="Skip animation (or press S/Space)"
-      >
-        Skip →
-      </button>
     </div>
 
     <!-- Epic Birthday Celebration Page -->
