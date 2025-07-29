@@ -1390,16 +1390,24 @@ body.terminal-hidden {
   background: rgba(0, 255, 255, 0.2);
   border: 1px solid #00ffff;
   color: #00ffff;
-  padding: clamp(4px, 1.5vw, 6px) clamp(6px, 2vw, 8px);
+  padding: 6px 10px;
   border-radius: 3px;
   cursor: pointer;
   font-family: 'JetBrains Mono', monospace;
-  font-size: clamp(9px, 2vw, 10px);
+  font-size: 11px;
   transition: all 0.3s ease;
-  /* Very compact but still touchable */
-  min-height: 24px;
+  min-height: 26px;
   white-space: nowrap;
   flex-shrink: 0; /* Don't let it shrink */
+}
+
+/* Mobile - make it smaller */
+@media (max-width: 768px) {
+  .skip-btn {
+    padding: 4px 6px;
+    font-size: 9px;
+    min-height: 20px;
+  }
 }
 
 .skip-btn:hover, .skip-btn:focus {
@@ -1889,11 +1897,7 @@ body.terminal-hidden {
     font-size: 11px;
   }
   
-  .skip-btn {
-    padding: 3px 6px;
-    font-size: 9px;
-    min-height: 22px;
-  }
+
 }
 
 /* High contrast mode support */
@@ -2001,8 +2005,7 @@ body {
   .back-btn,
   .generate-btn,
   #generate-pickup,
-  #generate-affirmation,
-  .skip-btn {
+  #generate-affirmation {
     min-height: 48px; /* Apple/Material Design recommended minimum */
     min-width: 48px;
     padding: clamp(12px, 4vw, 18px) clamp(20px, 5vw, 24px);
@@ -2016,8 +2019,7 @@ body {
   .back-btn:hover,
   .generate-btn:hover,
   #generate-pickup:hover,
-  #generate-affirmation:hover,
-  .skip-btn:hover {
+  #generate-affirmation:hover {
     transform: none;
   }
 }
