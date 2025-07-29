@@ -50,22 +50,37 @@ const terminalMessages = [
   "> System ready. Press any key to continue...",
 ];
 
+// ===== MOBILE TOUCH SUPPORT AND RESPONSIVE IMPROVEMENTS =====
+
+// Enhanced Mobile-friendly Terminal with Better Scrolling
 let currentMessageIndex = 0;
 let currentCharIndex = 0;
 let terminalTimeout;
 
 function typeTerminalMessage() {
   const output = document.getElementById("terminal-output");
+  const terminalBody = document.querySelector(".terminal-body");
   const currentMessage = terminalMessages[currentMessageIndex];
 
   if (currentCharIndex < currentMessage.length) {
     output.textContent += currentMessage[currentCharIndex];
     currentCharIndex++;
+
+    // Auto-scroll on mobile to keep content visible
+    if (terminalBody) {
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
+
     terminalTimeout = setTimeout(typeTerminalMessage, 30 + Math.random() * 20);
   } else {
     output.textContent += "\n";
     currentMessageIndex++;
     currentCharIndex = 0;
+
+    // Auto-scroll after each line
+    if (terminalBody) {
+      terminalBody.scrollTop = terminalBody.scrollHeight;
+    }
 
     if (currentMessageIndex < terminalMessages.length) {
       terminalTimeout = setTimeout(
@@ -77,6 +92,8 @@ function typeTerminalMessage() {
       setTimeout(() => {
         document.addEventListener("keydown", transitionToHub);
         document.addEventListener("click", transitionToHub);
+        // Add touch support for mobile
+        document.addEventListener("touchstart", transitionToHub);
       }, 1000);
     }
   }
@@ -95,6 +112,7 @@ function skipToNext() {
 function transitionToHub() {
   document.removeEventListener("keydown", transitionToHub);
   document.removeEventListener("click", transitionToHub);
+  document.removeEventListener("touchstart", transitionToHub);
 
   const terminal = document.getElementById("terminal");
   const celebration = document.getElementById("birthday-celebration");
@@ -268,12 +286,31 @@ function setupGiftBox() {
   const gift = document.getElementById("spectacular-gift");
   let giftOpened = false;
 
-  gift.addEventListener("click", () => {
+  function handleGiftInteraction(e) {
     if (!giftOpened) {
+      e.preventDefault(); // Prevent default touch behaviors
+      giftOpened = true;
+      openSpectacularGift();
+    }
+  }
+
+  // Add both click and touch listeners
+  gift.addEventListener("click", handleGiftInteraction);
+  gift.addEventListener("touchstart", handleGiftInteraction, {
+    passive: false,
+  });
+
+  // Add keyboard support
+  gift.addEventListener("keydown", (e) => {
+    if ((e.key === "Enter" || e.key === " ") && !giftOpened) {
+      e.preventDefault();
       giftOpened = true;
       openSpectacularGift();
     }
   });
+
+  // Make focusable
+  gift.setAttribute("tabindex", "0");
 }
 
 function openSpectacularGift() {
@@ -605,21 +642,58 @@ function createScreenFlash() {
 
 // Module Functionality
 function initializeModules() {
-  // Module click handlers
+  // Module click/touch handlers
   document.querySelectorAll(".module-card").forEach((module) => {
-    module.addEventListener("click", () => {
-      const moduleId = module.dataset.module;
-      openModuleView(moduleId);
+    // Remove existing listeners to avoid duplicates
+    module.removeEventListener("click", moduleClickHandler);
+    module.removeEventListener("touchstart", moduleClickHandler);
+
+    // Add both click and touch support
+    module.addEventListener("click", moduleClickHandler);
+    module.addEventListener("touchstart", moduleClickHandler, {
+      passive: true,
     });
+
+    // Add keyboard support for accessibility
+    module.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        const moduleId = module.dataset.module;
+        openModuleView(moduleId);
+      }
+    });
+
+    // Make focusable for keyboard navigation
+    module.setAttribute("tabindex", "0");
   });
 
-  // Back button handlers
+  // Back button handlers with touch support
   document.querySelectorAll(".back-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      document.getElementById("module-views").classList.add("hidden");
-      document.getElementById("main-hub").classList.remove("hidden");
-    });
+    btn.removeEventListener("click", backButtonHandler);
+    btn.removeEventListener("touchstart", backButtonHandler);
+
+    btn.addEventListener("click", backButtonHandler);
+    btn.addEventListener("touchstart", backButtonHandler, { passive: true });
   });
+}
+
+function moduleClickHandler(e) {
+  // Prevent double-firing on devices that support both touch and mouse
+  if (e.type === "touchstart") {
+    e.preventDefault();
+  }
+
+  const moduleId = this.dataset.module;
+  openModuleView(moduleId);
+}
+
+function backButtonHandler(e) {
+  if (e.type === "touchstart") {
+    e.preventDefault();
+  }
+
+  document.getElementById("module-views").classList.add("hidden");
+  document.getElementById("main-hub").classList.remove("hidden");
 }
 
 function openModuleView(moduleId) {
@@ -1366,6 +1440,8 @@ Are you my future? Because I can picture you in all of it now.`;
 // 3D Particle Universe Demo
 function initSculptureDemo() {
   const canvas = document.getElementById("main-sculpture-canvas");
+  if (!canvas) return;
+
   const ctx = canvas.getContext("2d");
 
   // Initialize particle universe
@@ -1380,48 +1456,113 @@ function initSculptureDemo() {
   let scale = 1;
   let autoRotate = true;
 
-  // Mouse controls
-  canvas.addEventListener("mousedown", (e) => {
+  // Unified pointer event handling for both mouse and touch
+  function getPointerPos(e) {
+    const rect = canvas.getBoundingClientRect();
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top,
+    };
+  }
+
+  // Mouse and Touch Start
+  function handlePointerStart(e) {
+    e.preventDefault(); // Prevent default touch behaviors
     isDragging = true;
-    lastMouse.x = e.clientX;
-    lastMouse.y = e.clientY;
+    const pos = getPointerPos(e);
+    lastMouse.x = pos.x;
+    lastMouse.y = pos.y;
     autoRotate = false; // Stop auto rotation when user interacts
 
     // Set attraction point for particle interaction
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = (e.clientX - rect.left - canvas.width / 2) / scale;
-    const mouseY = (e.clientY - rect.top - canvas.height / 2) / scale;
+    const mouseX = (pos.x - canvas.width / 2) / scale;
+    const mouseY = (pos.y - canvas.height / 2) / scale;
     attractionPoint = { x: mouseX, y: mouseY, z: 0 };
-  });
+  }
 
-  canvas.addEventListener("mousemove", (e) => {
-    const rect = canvas.getBoundingClientRect();
-    const mouseX = (e.clientX - rect.left - canvas.width / 2) / scale;
-    const mouseY = (e.clientY - rect.top - canvas.height / 2) / scale;
+  // Mouse and Touch Move
+  function handlePointerMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
 
-    if (isDragging) {
-      rotation.y += (e.clientX - lastMouse.x) * 0.01;
-      rotation.x += (e.clientY - lastMouse.y) * 0.01;
-      lastMouse.x = e.clientX;
-      lastMouse.y = e.clientY;
+    const pos = getPointerPos(e);
+    const mouseX = (pos.x - canvas.width / 2) / scale;
+    const mouseY = (pos.y - canvas.height / 2) / scale;
 
-      // Update attraction point
-      attractionPoint = { x: mouseX, y: mouseY, z: 0 };
+    rotation.y += (pos.x - lastMouse.x) * 0.01;
+    rotation.x += (pos.y - lastMouse.y) * 0.01;
+    lastMouse.x = pos.x;
+    lastMouse.y = pos.y;
+
+    // Update attraction point
+    attractionPoint = { x: mouseX, y: mouseY, z: 0 };
+  }
+
+  // Mouse and Touch End
+  function handlePointerEnd(e) {
+    e.preventDefault();
+    isDragging = false;
+    attractionPoint = { x: 0, y: 0, z: 0 }; // Reset attraction
+  }
+
+  // Mouse events
+  canvas.addEventListener("mousedown", handlePointerStart);
+  canvas.addEventListener("mousemove", handlePointerMove);
+  canvas.addEventListener("mouseup", handlePointerEnd);
+  canvas.addEventListener("mouseleave", handlePointerEnd);
+
+  // Touch events
+  canvas.addEventListener("touchstart", handlePointerStart, { passive: false });
+  canvas.addEventListener("touchmove", handlePointerMove, { passive: false });
+  canvas.addEventListener("touchend", handlePointerEnd, { passive: false });
+  canvas.addEventListener("touchcancel", handlePointerEnd, { passive: false });
+
+  // Enhanced wheel/pinch zoom support
+  canvas.addEventListener(
+    "wheel",
+    (e) => {
+      e.preventDefault();
+      scale += e.deltaY > 0 ? -0.1 : 0.1;
+      scale = Math.max(0.3, Math.min(3, scale));
+    },
+    { passive: false }
+  );
+
+  // Touch zoom with two fingers (pinch)
+  let lastTouchDistance = 0;
+  canvas.addEventListener("touchstart", (e) => {
+    if (e.touches.length === 2) {
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      lastTouchDistance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) +
+          Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
     }
   });
 
-  canvas.addEventListener("mouseup", () => {
-    isDragging = false;
-    attractionPoint = { x: 0, y: 0, z: 0 }; // Reset attraction
+  canvas.addEventListener("touchmove", (e) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) +
+          Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+
+      if (lastTouchDistance > 0) {
+        const scaleChange = (distance - lastTouchDistance) * 0.01;
+        scale += scaleChange;
+        scale = Math.max(0.3, Math.min(3, scale));
+      }
+      lastTouchDistance = distance;
+    }
   });
 
-  canvas.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    scale += e.deltaY > 0 ? -0.1 : 0.1;
-    scale = Math.max(0.3, Math.min(3, scale));
-  });
-
-  // Keyboard controls
+  // Keyboard controls (keep existing)
   document.addEventListener("keydown", (e) => {
     switch (e.key) {
       case "1":
@@ -2349,6 +2490,11 @@ function showComingSoon() {
 
 // Initialize everything when page loads
 document.addEventListener("DOMContentLoaded", () => {
+  // Initialize mobile optimizations
+  optimizeForMobile();
+  handleCanvasResize();
+  addTouchSupport();
+
   // Start terminal sequence after a brief delay
   setTimeout(() => {
     typeTerminalMessage();
@@ -2363,11 +2509,172 @@ document.addEventListener("DOMContentLoaded", () => {
       skipToNext();
     }
   });
+
+  // Prevent zoom on double-tap for iOS
+  let lastTouchEnd = 0;
+  document.addEventListener(
+    "touchend",
+    function (event) {
+      const now = new Date().getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    },
+    false
+  );
+
+  // Prevent zoom on pinch for iOS (except on canvas elements)
+  document.addEventListener("gesturestart", function (e) {
+    if (!e.target.tagName.toLowerCase() === "canvas") {
+      e.preventDefault();
+    }
+  });
 });
 
 // Update todo status
 function updateTodoStatus() {
-  // This would typically integrate with the todo system
   console.log("Terminal loading: Complete");
-  console.log("Interactive modules: In progress");
+  console.log("Mobile optimizations: Complete");
+  console.log("Touch support: Complete");
+  console.log("Interactive modules: Ready for mobile");
+}
+
+// Enhanced Button Event Handlers with Touch Support
+function addTouchSupport() {
+  // Skip button
+  const skipBtn = document.getElementById("skip-btn");
+  if (skipBtn) {
+    skipBtn.addEventListener(
+      "touchstart",
+      (e) => {
+        e.preventDefault();
+        skipToNext();
+      },
+      { passive: false }
+    );
+  }
+
+  // Generate buttons for affirmations and pickup lines
+  setTimeout(() => {
+    const generateAffirmationBtn = document.getElementById(
+      "generate-affirmation"
+    );
+    const generatePickupBtn = document.getElementById("generate-pickup");
+
+    if (generateAffirmationBtn) {
+      generateAffirmationBtn.addEventListener(
+        "touchstart",
+        (e) => {
+          e.preventDefault();
+          // The existing click handler will be triggered
+        },
+        { passive: false }
+      );
+    }
+
+    if (generatePickupBtn) {
+      generatePickupBtn.addEventListener(
+        "touchstart",
+        (e) => {
+          e.preventDefault();
+          // The existing click handler will be triggered
+        },
+        { passive: false }
+      );
+    }
+  }, 100);
+}
+
+// Enhanced Responsive Canvas Handling
+function handleCanvasResize() {
+  // Resize canvases when window resizes (important for mobile orientation changes)
+  window.addEventListener("resize", () => {
+    setTimeout(() => {
+      const sculptureCanvas = document.getElementById("main-sculpture-canvas");
+      if (sculptureCanvas) {
+        sculptureCanvas.width = sculptureCanvas.offsetWidth;
+        sculptureCanvas.height = sculptureCanvas.offsetHeight;
+      }
+
+      const basketballCanvas = document.getElementById(
+        "main-basketball-canvas"
+      );
+      if (basketballCanvas) {
+        basketballCanvas.width = basketballCanvas.offsetWidth;
+        basketballCanvas.height = basketballCanvas.offsetHeight;
+      }
+    }, 100);
+  });
+
+  // Handle orientation change specifically
+  window.addEventListener("orientationchange", () => {
+    setTimeout(() => {
+      // Force a reflow and repaint
+      const canvases = document.querySelectorAll("canvas");
+      canvases.forEach((canvas) => {
+        const parent = canvas.parentNode;
+        if (parent) {
+          canvas.style.width = "100%";
+          canvas.style.height = "auto";
+          canvas.width = canvas.offsetWidth;
+          canvas.height = canvas.offsetHeight;
+        }
+      });
+    }, 500);
+  });
+}
+
+// Mobile Performance Optimizations
+function optimizeForMobile() {
+  // Detect if device is mobile
+  const isMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+
+  if (isMobile) {
+    // Reduce particle count for better performance on mobile
+    if (typeof particleCount !== "undefined") {
+      particleCount = Math.min(particleCount, 150); // Limit to 150 particles on mobile
+    }
+
+    // Disable some expensive animations on mobile
+    document.body.classList.add("mobile-device");
+
+    // Reduce confetti on mobile
+    const originalCreateConfetti = createSpectacularConfetti;
+    if (typeof createSpectacularConfetti !== "undefined") {
+      createSpectacularConfetti = function () {
+        // Call original but with reduced parameters
+        originalCreateConfetti();
+
+        // Clear some confetti early on mobile
+        setTimeout(() => {
+          const confettiPieces = document.querySelectorAll(".confetti-piece");
+          confettiPieces.forEach((piece, index) => {
+            if (index % 2 === 0) {
+              // Remove every other piece
+              piece.remove();
+            }
+          });
+        }, 2000);
+      };
+    }
+
+    // Reduce animation durations for better performance
+    const style = document.createElement("style");
+    style.textContent = `
+      .mobile-device .confetti-piece {
+        animation-duration: 4s !important;
+      }
+      .mobile-device .epic-streamer {
+        animation-duration: 5s !important;
+      }
+      .mobile-device .floating {
+        animation-duration: 2s !important;
+      }
+    `;
+    document.head.appendChild(style);
+  }
 }
