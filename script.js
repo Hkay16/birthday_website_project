@@ -56,6 +56,9 @@ const terminalMessages = [
 let currentMessageIndex = 0;
 let currentCharIndex = 0;
 let terminalTimeout;
+let userIsScrolling = false;
+let scrollTimeout;
+let lastScrollTop = 0;
 
 function typeTerminalMessage() {
   const output = document.getElementById("terminal-output");
@@ -66,9 +69,15 @@ function typeTerminalMessage() {
     output.textContent += currentMessage[currentCharIndex];
     currentCharIndex++;
 
-    // Auto-scroll on mobile to keep content visible
-    if (terminalBody) {
-      terminalBody.scrollTop = terminalBody.scrollHeight;
+    // Only auto-scroll if user isn't manually scrolling
+    if (terminalBody && !userIsScrolling) {
+      // Check if user is near the bottom (within 50px) before auto-scrolling
+      const isNearBottom =
+        terminalBody.scrollTop >=
+        terminalBody.scrollHeight - terminalBody.clientHeight - 50;
+      if (isNearBottom) {
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+      }
     }
 
     terminalTimeout = setTimeout(typeTerminalMessage, 30 + Math.random() * 20);
@@ -77,9 +86,14 @@ function typeTerminalMessage() {
     currentMessageIndex++;
     currentCharIndex = 0;
 
-    // Auto-scroll after each line
-    if (terminalBody) {
-      terminalBody.scrollTop = terminalBody.scrollHeight;
+    // Only auto-scroll after line completion if user isn't scrolling
+    if (terminalBody && !userIsScrolling) {
+      const isNearBottom =
+        terminalBody.scrollTop >=
+        terminalBody.scrollHeight - terminalBody.clientHeight - 100;
+      if (isNearBottom) {
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+      }
     }
 
     if (currentMessageIndex < terminalMessages.length) {
@@ -282,23 +296,64 @@ function createNeonConfettiPiece(container, colors, delay = 0) {
 }
 
 function setupGiftBox() {
-  // Add click listener to the spectacular gift
   const gift = document.getElementById("spectacular-gift");
   let giftOpened = false;
 
-  function handleGiftInteraction(e) {
-    if (!giftOpened) {
-      e.preventDefault(); // Prevent default touch behaviors
+  function handleGiftClick(e) {
+    if (!giftOpened && e.type === "click" && e.pointerType !== "touch") {
       giftOpened = true;
       openSpectacularGift();
     }
   }
 
-  // Add both click and touch listeners
-  gift.addEventListener("click", handleGiftInteraction);
-  gift.addEventListener("touchstart", handleGiftInteraction, {
-    passive: false,
-  });
+  // Mouse click support
+  gift.addEventListener("click", handleGiftClick);
+
+  // Proper touch handling
+  let touchStartTime = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchMoved = false;
+
+  gift.addEventListener(
+    "touchstart",
+    (e) => {
+      if (giftOpened) return;
+      touchStartTime = Date.now();
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchMoved = false;
+    },
+    { passive: true }
+  );
+
+  gift.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!touchMoved) {
+        const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+        const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+        if (deltaX > 15 || deltaY > 15) {
+          touchMoved = true;
+        }
+      }
+    },
+    { passive: true }
+  );
+
+  gift.addEventListener(
+    "touchend",
+    (e) => {
+      if (giftOpened) return;
+      const touchDuration = Date.now() - touchStartTime;
+      if (!touchMoved && touchDuration < 500 && e.changedTouches.length === 1) {
+        e.preventDefault();
+        giftOpened = true;
+        openSpectacularGift();
+      }
+    },
+    { passive: false }
+  );
 
   // Add keyboard support
   gift.addEventListener("keydown", (e) => {
@@ -642,17 +697,64 @@ function createScreenFlash() {
 
 // Module Functionality
 function initializeModules() {
-  // Module click/touch handlers
+  // Module click/touch handlers with proper tap detection
   document.querySelectorAll(".module-card").forEach((module) => {
     // Remove existing listeners to avoid duplicates
     module.removeEventListener("click", moduleClickHandler);
     module.removeEventListener("touchstart", moduleClickHandler);
 
-    // Add both click and touch support
+    // Add click support for mouse
     module.addEventListener("click", moduleClickHandler);
-    module.addEventListener("touchstart", moduleClickHandler, {
-      passive: true,
-    });
+
+    // Add proper touch handling
+    let touchStartTime = 0;
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchMoved = false;
+
+    module.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartTime = Date.now();
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchMoved = false;
+      },
+      { passive: true }
+    );
+
+    module.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!touchMoved) {
+          const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+          const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+          // If moved more than 10px, it's a scroll, not a tap
+          if (deltaX > 10 || deltaY > 10) {
+            touchMoved = true;
+          }
+        }
+      },
+      { passive: true }
+    );
+
+    module.addEventListener(
+      "touchend",
+      (e) => {
+        const touchDuration = Date.now() - touchStartTime;
+        // Only treat as click if: quick tap (< 500ms), didn't move much, and single touch
+        if (
+          !touchMoved &&
+          touchDuration < 500 &&
+          e.changedTouches.length === 1
+        ) {
+          e.preventDefault();
+          const moduleId = module.dataset.module;
+          openModuleView(moduleId);
+        }
+      },
+      { passive: false }
+    );
 
     // Add keyboard support for accessibility
     module.addEventListener("keydown", (e) => {
@@ -667,33 +769,63 @@ function initializeModules() {
     module.setAttribute("tabindex", "0");
   });
 
-  // Back button handlers with touch support
+  // Back button handlers with better touch support
   document.querySelectorAll(".back-btn").forEach((btn) => {
     btn.removeEventListener("click", backButtonHandler);
     btn.removeEventListener("touchstart", backButtonHandler);
 
     btn.addEventListener("click", backButtonHandler);
-    btn.addEventListener("touchstart", backButtonHandler, { passive: true });
+
+    // Proper touch handling for back button
+    let touchStartTime = 0;
+    let touchMoved = false;
+
+    btn.addEventListener(
+      "touchstart",
+      (e) => {
+        touchStartTime = Date.now();
+        touchMoved = false;
+      },
+      { passive: true }
+    );
+
+    btn.addEventListener(
+      "touchmove",
+      (e) => {
+        touchMoved = true; // Any movement disqualifies it as a tap
+      },
+      { passive: true }
+    );
+
+    btn.addEventListener(
+      "touchend",
+      (e) => {
+        const touchDuration = Date.now() - touchStartTime;
+        if (!touchMoved && touchDuration < 500) {
+          e.preventDefault();
+          document.getElementById("module-views").classList.add("hidden");
+          document.getElementById("main-hub").classList.remove("hidden");
+        }
+      },
+      { passive: false }
+    );
   });
 }
 
 function moduleClickHandler(e) {
-  // Prevent double-firing on devices that support both touch and mouse
-  if (e.type === "touchstart") {
-    e.preventDefault();
+  // Only handle mouse clicks, not touch (touch is handled separately)
+  if (e.type === "click" && e.pointerType !== "touch") {
+    const moduleId = this.dataset.module;
+    openModuleView(moduleId);
   }
-
-  const moduleId = this.dataset.module;
-  openModuleView(moduleId);
 }
 
 function backButtonHandler(e) {
-  if (e.type === "touchstart") {
-    e.preventDefault();
+  // Only handle mouse clicks, not touch (touch is handled separately)
+  if (e.type === "click" && e.pointerType !== "touch") {
+    document.getElementById("module-views").classList.add("hidden");
+    document.getElementById("main-hub").classList.remove("hidden");
   }
-
-  document.getElementById("module-views").classList.add("hidden");
-  document.getElementById("main-hub").classList.remove("hidden");
 }
 
 function openModuleView(moduleId) {
@@ -2530,6 +2662,82 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
     }
   });
+
+  // Set up scroll detection for terminal
+  setTimeout(() => {
+    const terminalBody = document.querySelector(".terminal-body");
+    if (terminalBody) {
+      // Detect when user starts scrolling
+      terminalBody.addEventListener("scroll", () => {
+        // Check if user scrolled up (indicates manual scrolling)
+        const currentScrollTop = terminalBody.scrollTop;
+        if (currentScrollTop < lastScrollTop) {
+          // User scrolled up - disable auto-scroll
+          userIsScrolling = true;
+          clearTimeout(scrollTimeout);
+
+          // Re-enable auto-scroll after 3 seconds of no scrolling
+          scrollTimeout = setTimeout(() => {
+            userIsScrolling = false;
+          }, 3000);
+        }
+        lastScrollTop = currentScrollTop;
+      });
+
+      // Detect touch scrolling
+      let touchStartY = 0;
+      terminalBody.addEventListener("touchstart", (e) => {
+        touchStartY = e.touches[0].clientY;
+      });
+
+      terminalBody.addEventListener("touchmove", (e) => {
+        const touchY = e.touches[0].clientY;
+        const deltaY = touchStartY - touchY;
+
+        // If user is swiping up (deltaY > 0), they're scrolling up manually
+        if (deltaY > 10) {
+          userIsScrolling = true;
+          clearTimeout(scrollTimeout);
+
+          scrollTimeout = setTimeout(() => {
+            userIsScrolling = false;
+          }, 3000);
+        }
+      });
+
+      // Reset scroll behavior when user reaches bottom
+      terminalBody.addEventListener("scroll", () => {
+        const isAtBottom =
+          terminalBody.scrollTop >=
+          terminalBody.scrollHeight - terminalBody.clientHeight - 10;
+        if (isAtBottom) {
+          userIsScrolling = false; // Re-enable auto-scroll when at bottom
+        }
+      });
+    }
+  }, 100);
+
+  // Initialize mobile optimizations
+  optimizeForMobile();
+  handleCanvasResize();
+  addTouchSupport();
+
+  // Start terminal sequence after a brief delay
+  setTimeout(() => {
+    typeTerminalMessage();
+  }, 500);
+
+  // Add keyboard shortcut for skip (S key or Space)
+  document.addEventListener("keydown", (event) => {
+    if (
+      (event.key === "s" || event.key === "S" || event.key === " ") &&
+      !document.getElementById("terminal").classList.contains("hidden")
+    ) {
+      skipToNext();
+    }
+  });
+
+  // Already handled above - removed duplicate
 });
 
 // Update todo status
@@ -2542,14 +2750,37 @@ function updateTodoStatus() {
 
 // Enhanced Button Event Handlers with Touch Support
 function addTouchSupport() {
-  // Skip button
+  // Skip button with proper touch handling
   const skipBtn = document.getElementById("skip-btn");
   if (skipBtn) {
+    let touchStartTime = 0;
+    let touchMoved = false;
+
     skipBtn.addEventListener(
       "touchstart",
       (e) => {
-        e.preventDefault();
-        skipToNext();
+        touchStartTime = Date.now();
+        touchMoved = false;
+      },
+      { passive: true }
+    );
+
+    skipBtn.addEventListener(
+      "touchmove",
+      (e) => {
+        touchMoved = true;
+      },
+      { passive: true }
+    );
+
+    skipBtn.addEventListener(
+      "touchend",
+      (e) => {
+        const touchDuration = Date.now() - touchStartTime;
+        if (!touchMoved && touchDuration < 500) {
+          e.preventDefault();
+          skipToNext();
+        }
       },
       { passive: false }
     );
@@ -2562,28 +2793,43 @@ function addTouchSupport() {
     );
     const generatePickupBtn = document.getElementById("generate-pickup");
 
-    if (generateAffirmationBtn) {
-      generateAffirmationBtn.addEventListener(
-        "touchstart",
-        (e) => {
-          e.preventDefault();
-          // The existing click handler will be triggered
-        },
-        { passive: false }
-      );
-    }
+    [generateAffirmationBtn, generatePickupBtn].forEach((btn) => {
+      if (btn) {
+        let touchStartTime = 0;
+        let touchMoved = false;
 
-    if (generatePickupBtn) {
-      generatePickupBtn.addEventListener(
-        "touchstart",
-        (e) => {
-          e.preventDefault();
-          // The existing click handler will be triggered
-        },
-        { passive: false }
-      );
-    }
-  }, 100);
+        btn.addEventListener(
+          "touchstart",
+          (e) => {
+            touchStartTime = Date.now();
+            touchMoved = false;
+          },
+          { passive: true }
+        );
+
+        btn.addEventListener(
+          "touchmove",
+          (e) => {
+            touchMoved = true;
+          },
+          { passive: true }
+        );
+
+        btn.addEventListener(
+          "touchend",
+          (e) => {
+            const touchDuration = Date.now() - touchStartTime;
+            if (!touchMoved && touchDuration < 500) {
+              e.preventDefault();
+              // Trigger the click event
+              btn.click();
+            }
+          },
+          { passive: false }
+        );
+      }
+    });
+  }, 500);
 }
 
 // Enhanced Responsive Canvas Handling
