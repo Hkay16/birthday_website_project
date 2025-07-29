@@ -888,348 +888,222 @@ function initAffirmationsDemo() {
 
   // Embed the affirmations data directly
   const affirmationsData = `text,mood
-"You carry yourself with something that turns heads.",CONFIDENT
-"Your presence has weight - people notice when you walk in.",CONFIDENT
-"You've got this combination of smart and attractive that works.",CONFIDENT
-"Your voice hits different when you're confident about something.",CONFIDENT
-"You have this magnetic energy that draws people in.",CONFIDENT
-"You're the kind of attractive that grows on people and then never leaves.",CONFIDENT
-"Your mind is as attractive as anything else about you.",CONFIDENT
-"You have incredible strength, even when you don't feel it.",ENCOURAGING
-"You are enough, exactly as you are, right now.",ENCOURAGING
-"Your heart is genuine, and that matters more than you know.",ENCOURAGING
-"You matter more than you realize.",ENCOURAGING
-"Your mind works in ways that surprise people in good ways.",ENCOURAGING
-"Your existence makes the world a little brighter.",ENCOURAGING
-"You deserve patience, especially from yourself.",ENCOURAGING
-"Your instincts about people are usually right.",ENCOURAGING
-"Your style is distinctly you, and it works perfectly.",ENCOURAGING
-"People notice when you walk into a room.",CONFIDENT
-"Your laugh is contagious in the best way.",ENCOURAGING
-"Your voice carries weight when you speak.",ENCOURAGING
-"You are not alone, even when it feels that way.",SUPPORTIVE
-"The right people will see your value.",SUPPORTIVE
-"You have the capacity to build meaningful connections.",SUPPORTIVE
-"Your friendship is a gift to anyone who receives it.",SUPPORTIVE
-"You're the kind of person others feel safe around.",SUPPORTIVE
-"Your care for others doesn't go unnoticed.",SUPPORTIVE
-"You make people feel heard and understood.",SUPPORTIVE
-"Someone out there is grateful you exist.",SUPPORTIVE
-"You have a way of making others feel comfortable.",SUPPORTIVE
-"You attract people who appreciate authenticity.",SUPPORTIVE
-"Starting over takes courage, and you have it.",MOTIVATING
-"Every introduction is a chance for a fresh start.",MOTIVATING
-"You're brave for putting yourself out there.",MOTIVATING
-"Your resilience is quietly inspiring.",MOTIVATING
-"Growing pains mean you're actually growing.",MOTIVATING
-"Each day is a new opportunity to surprise yourself.",MOTIVATING
-"You're becoming who you're meant to be.",MOTIVATING
-"Your story is still being written, and it's going to be meaningful.",MOTIVATING
-"Reinventing yourself is a sign of wisdom, not weakness.",MOTIVATING
-"You have everything within you to build the life you want.",MOTIVATING
-"Fresh starts are gifts we give ourselves.",MOTIVATING
-"You're exactly where you need to be for your next chapter.",MOTIVATING
-"It's okay to feel overwhelmed sometimes.",CALMING
-"Your anxiety doesn't define you or limit your potential.",CALMING
-"You're learning to navigate new feelings, and that takes time.",CALMING
-"Breathe. You've overcome difficult moments before.",CALMING
-"This feeling is temporary, but your strength is permanent.",CALMING
-"You're allowed to take things one day at a time.",CALMING
-"Your pace is the right pace for you.",CALMING
-"It's okay to ask for help when you need it.",CALMING
-"You're handling more than most people could.",CALMING
-"Your mind is learning new ways to cope, and that's growth.",CALMING
-"You don't have to be strong all the time.",CALMING
-"Rest is productive when you need to recharge.",CALMING
-"This anxiety is temporary - your strength isn't.",CALMING
-"You deserve to treat yourself with kindness.",SELF_CARE
-"Taking care of yourself isn't selfish, it's necessary.",SELF_CARE
-"You're allowed to prioritize your own wellbeing.",SELF_CARE
-"Small acts of self-love add up to big changes.",SELF_CARE
-"You deserve comfort, especially during tough times.",SELF_CARE
-"Your needs matter and deserve attention.",SELF_CARE
-"It's okay to say no to things that drain you.",SELF_CARE
-"You're worthy of the same compassion you give others.",SELF_CARE
-"Taking a break doesn't make you weak.",SELF_CARE
-"Your mental health is just as important as your physical health.",SELF_CARE
-"You're allowed to have boundaries, and they're healthy.",SELF_CARE
-"Healing isn't linear, and that's perfectly normal.",SELF_CARE
-"Your comfort zone is valid until you're ready to expand it.",SELF_CARE
-"You don't owe anyone an explanation for taking care of yourself.",SELF_CARE
-"Your future self will thank you for not giving up.",HOPEFUL
-"This difficult chapter doesn't define your whole story.",HOPEFUL
-"You have real moments still ahead of you.",HOPEFUL
-"Your dreams are still valid and achievable.",HOPEFUL
-"The best version of yourself is still emerging.",HOPEFUL
-"Life has meaningful surprises waiting for you.",HOPEFUL
-"You're going to look back on this time and be proud of your strength.",HOPEFUL
-"Everything you're going through is preparing you for something better.",HOPEFUL
-"You haven't lost your edge — you're just taking a breather.",AFFIRMING
-"Your presence is strong enough that you don't have to perform.",AFFIRMING
-"You haven't missed your moment — it hasn't even arrived yet.",AFFIRMING
-"This isn't the end of anything. It's just a detour.",AFFIRMING
-"You being here — existing, even on low battery — makes a difference.",AFFIRMING
-"The version of you coming next is going to respect this one for not giving up.",AFFIRMING
-"You're still sharp. Still capable. Still here.",AFFIRMING
-"You're not soft. You're steel — even if this has tested you.",AFFIRMING
-"The low moments feel longer than they last. Hold the line.",AFFIRMING
-"This year could still hold something you didn't see coming.",AFFIRMING
-"You don't have to believe in everything right now. Just don't quit.",AFFIRMING
-"You carry yourself with something most people wish they had.",AFFIRMING
-"You've got a calm presence that people notice.",AFFIRMING
-"Your voice hits different — there's something grounded in it.",AFFIRMING
-"You listen in a way most people don't. That sticks with people.",AFFIRMING
-"You're not starting from scratch. You're starting from experience.",AFFIRMING
-"Your fear of being forgotten? That proves you've got more to give.",AFFIRMING
-"You're not failing — your brain's just adjusting to things it's never had to carry before.",AFFIRMING
-"Feeling off doesn't mean you've lost yourself.",AFFIRMING
-"You're still in control, even if it doesn't always feel like it.",AFFIRMING
-"It's okay to not be okay. You've earned that grace.",AFFIRMING
-"You don't need to pretend. You're allowed to be exactly how you are today.",AFFIRMING
-"You don't have to prove your worth — it's already there.",AFFIRMING
-"You deserve a win — and it's on the way.",AFFIRMING
-"There's nothing wrong with wanting peace.",AFFIRMING
-"It's okay if today isn't your favorite day. Tomorrow gets a shot too.",AFFIRMING
-"You're still the guy people would bet on.",AFFIRMING
-"Your awkward moments don't define you - your comeback always does.",AFFIRMING
-"You've got this thing where you can make people feel seen.",AFFIRMING
-"Your humor hits different because it comes from somewhere real.",AFFIRMING
-"Your sense of humor has layers - it's not just funny, it's intelligent.",GENUINE
-"You have this way of being thoughtful that people remember.",GENUINE
-"You care about people in ways that actually matter to them.",GENUINE
-"You see things in ways that make others think differently.",APPRECIATIVE
-"You're the kind of person who remembers details that matter to people.",APPRECIATIVE
-"Your mind works in patterns that are genuinely impressive.",APPRECIATIVE
-"You have this quality of making complex things feel approachable.",GENUINE
-"Your kindness isn't performative - it's just who you are.",GENUINE
-"You're funnier than you think, in ways that actually land.",APPRECIATIVE
-"You balance being clever and kind better than most people.",APPRECIATIVE
-"Your depth shows up in conversations when people least expect it.",GENUINE
-"You're not trying to impress anyone, which is exactly what's impressive.",GENUINE
-"Your intelligence comes through in how you listen, not just how you speak.",APPRECIATIVE
-"You have this way of being present that makes people feel heard.",GENUINE
-"Your humor is the kind that makes people feel included, not excluded.",APPRECIATIVE
-"You're more perceptive about people than you probably realize.",GENUINE
-"Your thoughtfulness isn't an act - it's embedded in how you move through the world.",APPRECIATIVE
-"Your confidence has a foundation - it's not just an act.",GENUINE
-"You show up for people when it actually counts.",APPRECIATIVE
-"Your conversations have substance because you bring substance to them.",APPRECIATIVE
-"You're the type of person who makes others feel like they can step up.",GENUINE
-"Your mind works faster than most people give you credit for.",APPRECIATIVE
-"You have this ability to see opportunities where others see problems.",CONFIDENT
-"You understand people better than you let on.",APPRECIATIVE
-"You've built something good for yourself and that takes skill.",GENUINE
-"Your standards aren't too high - they're exactly where they should be.",CONFIDENT
-"This rough patch doesn't erase everything you've accomplished.",SUPPORTIVE
-"You've got good taste and the means to back it up.",CONFIDENT
-"Your success isn't accidental - you made the right moves.",CONFIDENT
-"You're used to winning, and this setback doesn't change that.",SUPPORTIVE`;
+"Happy Birthday! You're another year wiser and more amazing.",BIRTHDAY
+"Every year you become more yourself - and that's beautiful to watch.",BIRTHDAY
+"Your birthday is a celebration of all the growth you've experienced.",BIRTHDAY
+"Another year means another level of understanding life unlocked.",LEARNING
+"You approach challenges with curiosity rather than fear - that's wisdom.",LEARNING
+"Your mind is like a garden that keeps growing new interesting thoughts.",LEARNING
+"You ask great questions, which shows you're always learning.",LEARNING
+"You have this wonderful balance of confidence and humility.",PSYCHOLOGY
+"Your emotional intelligence is one of your superpowers.",PSYCHOLOGY
+"You're getting better at understanding yourself each year.",PSYCHOLOGY
+"You listen to people in a way that makes them feel truly heard.",PSYCHOLOGY
+"Your empathy is a gift to everyone around you.",PSYCHOLOGY
+"You handle setbacks with grace and bounce back stronger.",PSYCHOLOGY
+"Your authenticity makes people feel safe to be themselves.",FRIENDSHIP
+"You're the kind of friend who remembers the little things that matter.",FRIENDSHIP
+"People trust you because you're genuinely trustworthy.",FRIENDSHIP
+"You have this rare quality of being both fun and reliable.",FRIENDSHIP
+"Your sense of humor brightens people's days.",FRIENDSHIP
+"You make ordinary moments feel special just by being there.",FRIENDSHIP
+"Your curiosity about the world is contagious.",INSPIRING
+"You see possibilities where others see problems.",INSPIRING
+"Your enthusiasm for learning new things is infectious.",INSPIRING
+"You inspire others by being brave enough to try new things.",INSPIRING
+"Your growth mindset helps you turn obstacles into opportunities.",INSPIRING
+"You're proof that being smart and kind aren't mutually exclusive.",INSPIRING
+"You have this beautiful way of finding meaning in everyday experiences.",REFLECTION
+"Your ability to reflect on experiences helps you grow continuously.",REFLECTION
+"You're developing wisdom by staying curious about yourself.",REFLECTION
+"You understand that vulnerability is actually a strength.",REFLECTION
+"Your self-awareness is helping you become who you want to be.",REFLECTION
+"You're learning that growth happens outside your comfort zone.",REFLECTION
+"You celebrate others' successes genuinely - that shows character.",CHARACTER
+"You stand up for what's right even when it's difficult.",CHARACTER
+"Your integrity is unwavering, and people notice that.",CHARACTER
+"You treat everyone with respect regardless of their status.",CHARACTER
+"You're building a life based on your values, not others' expectations.",CHARACTER
+"Your kindness is a conscious choice you make every day.",CHARACTER
+"You're getting better at setting healthy boundaries.",GROWTH
+"You're learning to balance caring for others with caring for yourself.",GROWTH
+"Every mistake teaches you something valuable about life.",GROWTH
+"You're becoming more comfortable with uncertainty.",GROWTH
+"Your resilience is quietly inspiring to everyone who knows you.",GROWTH
+"You're writing your own story with intention and purpose.",GROWTH`;
 
-  // Process the data immediately instead of fetching
-  Promise.resolve(affirmationsData)
-    .then((data) => {
-      const lines = data
-        .trim()
-        .split("\n")
-        .filter((line) => line.trim() !== "");
-      const headerLine = lines.shift(); // Remove CSV header
-      allAffirmations = lines.map((line) => {
-        // Proper CSV parsing: find the last comma that's outside quotes
-        const lastCommaIndex = line.lastIndexOf('",');
-        if (lastCommaIndex === -1) {
-          // Fallback for malformed lines
-          return {
-            text: line.replace(/"/g, "").trim(),
-            mood: "ENCOURAGING",
-            used: false,
-          };
-        }
-
-        const text = line
-          .substring(0, lastCommaIndex + 1)
-          .replace(/"/g, "")
-          .trim();
-        const mood = line.substring(lastCommaIndex + 2).trim();
-
+  // Parse CSV data
+  const lines = affirmationsData.trim().split("\n");
+  allAffirmations = lines
+    .slice(1)
+    .map((line) => {
+      const match = line.match(/^"(.+)",(.+)$/);
+      if (match) {
         return {
-          text: text,
-          mood: mood || "ENCOURAGING",
+          text: match[1],
+          mood: match[2],
           used: false,
         };
-      });
-
-      // Shuffle the array initially
-      shuffleArray(allAffirmations);
-
-      // Initialize with first affirmation
-      if (allAffirmations.length > 0) {
-        currentAffirmation.textContent = `"${allAffirmations[0].text}"`;
-        currentMoodText.textContent = formatMoodText(allAffirmations[0].mood);
-        allAffirmations[0].used = true;
-        currentIndex = 1;
-        updateCounterDisplay();
       }
-
-      // Update the description text to show actual count
-      updateAffirmationsDescription();
     })
-    .catch((error) => {
-      console.log("Using backup affirmations...");
-      // Fallback to embedded affirmations if file fails to load
-      const backupAffirmations = [
-        "You're stronger than you know.",
-        "Your hair looks really good today.",
-        "You deserve kindness, especially from yourself.",
-        "You're not alone in this journey.",
-        "Better days are coming your way.",
-      ];
-      allAffirmations = backupAffirmations.map((text) => ({
-        text,
-        mood: "ENCOURAGING",
-        used: false,
-      }));
-      shuffleArray(allAffirmations);
-      currentAffirmation.textContent = `"${allAffirmations[0].text}"`;
-      currentMoodText.textContent = allAffirmations[0].mood;
-      allAffirmations[0].used = true;
-      currentIndex = 1;
-      updateCounterDisplay();
-      updateAffirmationsDescription();
-    });
+    .filter(Boolean);
 
-  // Description stays static - no count needed
-  function updateAffirmationsDescription() {
-    // User doesn't want to see counts, keep description simple and static
-    const affirmationsDescription = document.querySelector(
-      '[data-module="affirmations-module"] p'
-    );
-    if (affirmationsDescription) {
-      affirmationsDescription.textContent =
-        "Gentle reminders of all the good things about you";
-    }
-  }
+  // Shuffle the array initially
+  shuffleArray(allAffirmations);
 
-  // Create About Affirmations button with better positioning
-  const aboutBtn = document.createElement("button");
-  aboutBtn.textContent = "About Affirmations";
-  aboutBtn.className = "generate-btn";
-  aboutBtn.style.marginTop = "15px";
-  aboutBtn.style.backgroundColor = "#87CEEB";
-  aboutBtn.style.fontSize = "0.9rem";
-  aboutBtn.style.padding = "12px 24px";
-
-  // Add button after the controls div, not floating to the side
-  const controlsDiv = document.querySelector(".affirmation-controls");
-  controlsDiv.appendChild(aboutBtn);
-
-  let showAbout = false;
-
-  function updateAboutContent() {
-    const existingDisplay = document.querySelector(".affirmation-about");
-    if (existingDisplay) {
-      existingDisplay.remove();
-    }
-
-    if (showAbout) {
-      const aboutDiv = document.createElement("div");
-      aboutDiv.className = "affirmation-about";
-      aboutDiv.style.backgroundColor = "rgba(135, 206, 235, 0.1)";
-      aboutDiv.style.color = "#87CEEB";
-      aboutDiv.style.padding = "20px";
-      aboutDiv.style.marginTop = "20px";
-      aboutDiv.style.borderRadius = "15px";
-      aboutDiv.style.fontFamily = "'Segoe UI', sans-serif";
-      aboutDiv.style.fontSize = "14px";
-      aboutDiv.style.lineHeight = "1.6";
-      aboutDiv.style.border = "1px solid rgba(135, 206, 235, 0.3)";
-      aboutDiv.style.textAlign = "left";
-      aboutDiv.style.maxWidth = "600px";
-      aboutDiv.style.marginLeft = "auto";
-      aboutDiv.style.marginRight = "auto";
-
-      aboutDiv.innerHTML = `
-        <h3 style="color: #87CEEB; margin-top: 0; font-size: 16px;">Why This Actually Works</h3>
-        <p style="margin: 10px 0;">Your brain physically changes based on what you think about repeatedly. Neuroscientists call this "neuroplasticity" - your brain's ability to rewire itself throughout your life.</p>
-        
-        <p style="margin: 10px 0;">When you read positive, true statements about yourself, you're literally building new neural pathways. After weeks of repetition, your brain starts to default to these healthier thought patterns instead of negative self-talk.</p>
-        
-        <p style="margin: 10px 0;">These aren't just "feel good" messages. They're carefully written to counter specific negative thoughts that many people struggle with - feeling forgotten, doubting your worth, or getting stuck in comparison loops.</p>
-        
-        <p style="margin: 10px 0; font-style: italic; color: #9BB5CE;">The key is consistency, not perfection. Even when you don't fully believe it yet, reading something true about yourself plants seeds that grow over time.</p>
-        
-        <div style="margin-top: 15px; padding: 10px; background: rgba(135, 206, 235, 0.1); border-radius: 8px; font-size: 12px; max-width: 600px; margin-left: auto; margin-right: auto;">
-          <strong>Approach:</strong> No repeats until you've seen them all<br>
-          <strong>Focus:</strong> Genuine statements, not generic positivity<br>
-          <strong>Goal:</strong> Rewire your brain toward self-compassion
-        </div>
-      `;
-
-      // Insert after the entire affirmations container, not inside it
-      const affirmationsView = document.getElementById("affirmations-view");
-      affirmationsView.appendChild(aboutDiv);
-    }
-  }
-
-  generateBtn.addEventListener("click", () => {
-    if (allAffirmations.length === 0) return; // Wait for affirmations to load
-
-    // If we've used all affirmations, reset and reshuffle
-    if (currentIndex >= allAffirmations.length) {
-      allAffirmations.forEach((affirmation) => (affirmation.used = false));
-      shuffleArray(allAffirmations);
-      currentIndex = 0;
-    }
-
-    // Get the next unused affirmation
-    const selectedAffirmation = allAffirmations[currentIndex];
-
-    // Simple fade transition without multiple animations
-    currentAffirmation.style.opacity = "0.3";
-    setTimeout(() => {
-      currentAffirmation.textContent = `"${selectedAffirmation.text}"`;
-      currentAffirmation.style.opacity = "1";
-    }, 150);
-
-    selectedAffirmation.used = true;
-    currentIndex++;
-
-    count++;
+  // Initialize with first affirmation
+  if (allAffirmations.length > 0) {
+    currentAffirmation.textContent = `"${allAffirmations[0].text}"`;
+    currentMoodText.textContent = formatMoodText(allAffirmations[0].mood);
+    allAffirmations[0].used = true;
+    currentIndex = 1;
     updateCounterDisplay();
-    currentMoodText.textContent = formatMoodText(selectedAffirmation.mood);
-  });
-
-  aboutBtn.addEventListener("click", () => {
-    showAbout = !showAbout;
-    aboutBtn.textContent = showAbout ? "Hide Details" : "About Affirmations";
-    updateAboutContent();
-  });
-
-  // Function to format mood text for display
-  function formatMoodText(mood) {
-    const moodMap = {
-      CONFIDENT: "CONFIDENT",
-      ENCOURAGING: "ENCOURAGING",
-      SUPPORTIVE: "SUPPORTIVE",
-      MOTIVATING: "MOTIVATING",
-      CALMING: "CALMING",
-      SELF_CARE: "SELF CARE",
-      HOPEFUL: "HOPEFUL",
-      AFFIRMING: "AFFIRMING",
-      GENUINE: "GENUINE",
-      APPRECIATIVE: "APPRECIATIVE",
-    };
-    return moodMap[mood] || mood;
   }
 
-  // Function to update counter display with proper singular/plural
-  function updateCounterDisplay() {
-    const reminderText =
-      count === 1 ? "gentle reminder shared" : "gentle reminders shared";
-    reminderCountText.textContent = `${count} ${reminderText}`;
-  }
-
-  // Load affirmations from CSV file with fallback
+  // Update the description text to show actual count
+  updateAffirmationsDescription();
 }
+
+// Description stays static - no count needed
+function updateAffirmationsDescription() {
+  // User doesn't want to see counts, keep description simple and static
+  const affirmationsDescription = document.querySelector(
+    '[data-module="affirmations-module"] p'
+  );
+  if (affirmationsDescription) {
+    affirmationsDescription.textContent =
+      "Gentle reminders of all the good things about you";
+  }
+}
+
+// Create About Affirmations button with better positioning
+const aboutBtn = document.createElement("button");
+aboutBtn.textContent = "About Affirmations";
+aboutBtn.className = "generate-btn";
+aboutBtn.style.marginTop = "15px";
+aboutBtn.style.backgroundColor = "#87CEEB";
+aboutBtn.style.fontSize = "0.9rem";
+aboutBtn.style.padding = "12px 24px";
+
+// Add button after the controls div, not floating to the side
+const controlsDiv = document.querySelector(".affirmation-controls");
+controlsDiv.appendChild(aboutBtn);
+
+let showAbout = false;
+
+function updateAboutContent() {
+  const existingDisplay = document.querySelector(".affirmation-about");
+  if (existingDisplay) {
+    existingDisplay.remove();
+  }
+
+  if (showAbout) {
+    const aboutDiv = document.createElement("div");
+    aboutDiv.className = "affirmation-about";
+    aboutDiv.style.backgroundColor = "rgba(135, 206, 235, 0.1)";
+    aboutDiv.style.color = "#87CEEB";
+    aboutDiv.style.padding = "20px";
+    aboutDiv.style.marginTop = "20px";
+    aboutDiv.style.borderRadius = "15px";
+    aboutDiv.style.fontFamily = "'Segoe UI', sans-serif";
+    aboutDiv.style.fontSize = "14px";
+    aboutDiv.style.lineHeight = "1.6";
+    aboutDiv.style.border = "1px solid rgba(135, 206, 235, 0.3)";
+    aboutDiv.style.textAlign = "left";
+    aboutDiv.style.maxWidth = "600px";
+    aboutDiv.style.marginLeft = "auto";
+    aboutDiv.style.marginRight = "auto";
+
+    aboutDiv.innerHTML = `
+      <h3 style="color: #87CEEB; margin-top: 0; font-size: 16px;">Why This Actually Works</h3>
+      <p style="margin: 10px 0;">Your brain physically changes based on what you think about repeatedly. Neuroscientists call this "neuroplasticity" - your brain's ability to rewire itself throughout your life.</p>
+      
+      <p style="margin: 10px 0;">When you read positive, true statements about yourself, you're literally building new neural pathways. After weeks of repetition, your brain starts to default to these healthier thought patterns instead of negative self-talk.</p>
+      
+      <p style="margin: 10px 0;">These aren't just "feel good" messages. They're carefully written to counter specific negative thoughts that many people struggle with - feeling forgotten, doubting your worth, or getting stuck in comparison loops.</p>
+      
+      <p style="margin: 10px 0; font-style: italic; color: #9BB5CE;">The key is consistency, not perfection. Even when you don't fully believe it yet, reading something true about yourself plants seeds that grow over time.</p>
+      
+      <div style="margin-top: 15px; padding: 10px; background: rgba(135, 206, 235, 0.1); border-radius: 8px; font-size: 12px; max-width: 600px; margin-left: auto; margin-right: auto;">
+        <strong>Approach:</strong> No repeats until you've seen them all<br>
+        <strong>Focus:</strong> Genuine statements, not generic positivity<br>
+        <strong>Goal:</strong> Rewire your brain toward self-compassion
+      </div>
+    `;
+
+    // Insert after the entire affirmations container, not inside it
+    const affirmationsView = document.getElementById("affirmations-view");
+    affirmationsView.appendChild(aboutDiv);
+  }
+}
+
+generateBtn.addEventListener("click", () => {
+  if (allAffirmations.length === 0) return; // Wait for affirmations to load
+
+  // If we've used all affirmations, reset and reshuffle
+  if (currentIndex >= allAffirmations.length) {
+    allAffirmations.forEach((affirmation) => (affirmation.used = false));
+    shuffleArray(allAffirmations);
+    currentIndex = 0;
+  }
+
+  // Get the next unused affirmation
+  const selectedAffirmation = allAffirmations[currentIndex];
+
+  // Simple fade transition without multiple animations
+  currentAffirmation.style.opacity = "0.3";
+  setTimeout(() => {
+    currentAffirmation.textContent = `"${selectedAffirmation.text}"`;
+    currentAffirmation.style.opacity = "1";
+  }, 150);
+
+  selectedAffirmation.used = true;
+  currentIndex++;
+
+  count++;
+  updateCounterDisplay();
+  currentMoodText.textContent = formatMoodText(selectedAffirmation.mood);
+});
+
+aboutBtn.addEventListener("click", () => {
+  showAbout = !showAbout;
+  aboutBtn.textContent = showAbout ? "Hide Details" : "About Affirmations";
+  updateAboutContent();
+});
+
+// Function to format mood text for display
+function formatMoodText(mood) {
+  const moodMap = {
+    CONFIDENT: "CONFIDENT",
+    ENCOURAGING: "ENCOURAGING",
+    SUPPORTIVE: "SUPPORTIVE",
+    MOTIVATING: "MOTIVATING",
+    CALMING: "CALMING",
+    SELF_CARE: "SELF CARE",
+    HOPEFUL: "HOPEFUL",
+    AFFIRMING: "AFFIRMING",
+    GENUINE: "GENUINE",
+    APPRECIATIVE: "APPRECIATIVE",
+    BIRTHDAY: "BIRTHDAY",
+    LEARNING: "LEARNING",
+    PSYCHOLOGY: "PSYCHOLOGY",
+    FRIENDSHIP: "FRIENDSHIP",
+    CHARACTER: "CHARACTER",
+    GROWTH: "GROWTH",
+    REFLECTION: "REFLECTION",
+    INSPIRING: "INSPIRING",
+  };
+  return moodMap[mood] || mood;
+}
+
+// Function to update counter display with proper singular/plural
+function updateCounterDisplay() {
+  const reminderText =
+    count === 1 ? "gentle reminder shared" : "gentle reminders shared";
+  reminderCountText.textContent = `${count} ${reminderText}`;
+}
+
+// Load affirmations from CSV file with fallback
 
 // 3D Particle Universe Preview
 function initSculpturePreview() {
@@ -1349,137 +1223,179 @@ Are you a basketball? 'Cause I'm tryna dribble you all night.
 Call me Steph 'cause I won't miss my shot with you.
 You rebound better than my last situationship.
 Are you the court? Because I want to lay you down and play all night.
+Are you the paint? Because I'm ready to post up inside you.
 Are you a dollar bill? 'Cause I want to make you mine and fold you in all the right places.
-Are you a variable? Because I want to access your private members.
-You must be a compiler because you make my heart race every time you process me.
-Are you an algorithm? Because you've optimized my heart.
-Is your name Wi-Fi? Because I'm feeling a connection.
-Are you a camera? Because every time I look at you, I smile.
-You must be made of copper and tellurium because you're Cu-Te.
-Are you Google? Because you have everything I've been searching for.
-You're like a fine wine—you just keep getting better with age.
-Do you have a map? Because I just got lost in your eyes.
-Are you a magician? Because whenever I look at you, everyone else disappears.
-If you were a vegetable, you'd be a cute-cumber.
-Are you a parking ticket? Because you've got 'fine' written all over you.
-Do you believe in love at first sight, or should I walk by again?
-Are you a bank loan? Because you have my interest.
-Is your dad a boxer? Because you're a knockout.
-Are you French? Because Eiffel for you.
-Do you have a Band-Aid? Because I just scraped my knee falling for you.
-Are you a time traveler? Because I see you in my future.
-You must be a star because your beauty lights up the night.
-Are you a dictionary? Because you add meaning to my life.
-If beauty were time, you'd be an eternity.
-Are you my phone charger? Because without you, I'd die.
-You're so beautiful, you made me forget my pickup line.
-Are you a beaver? Because daaaaam.
-Do you like Star Wars? Because Yoda one for me.
-Are you a 45-degree angle? Because you're acute-y.
-Are you made of beryllium, gold, and titanium? Because you're Be-Au-Ti-ful.
-I must be a snowflake because I've fallen for you.
-Are you my appendix? Because I don't understand how you work, but this feeling in my stomach makes me want to take you out.
-You're like pizza—even when you're bad, you're still pretty good.
-Are you a campfire? Because you're hot and I want s'more.
-Do you have a sunburn, or are you always this hot?
-Are you a tower? Because Eiffel for you.
-Is your name Ariel? Because we mermaid for each other.
-You must be tired because you've been running through my mind all day.
-Are you a cat? Because you're purr-fect.
-Do you have a pencil? Because I want to erase your past and write our future.
-Are you Netflix? Because I could watch you for hours.
-You're so sweet, you're giving me a toothache.
-Are you a loan? Because you have my interest and I'm ready to pay you back.
-Are you lightning? Because you're electrifying.
-You must be a broom because you just swept me off my feet.
-Are you a fossil? Because I've been digging you.
-Do you work at Starbucks? Because I like you a latte.
-Are you an elevator? Because you lift me up.
-You're like a fine wine, you get better with time.
-Are you a thief? Because you stole my heart.
-Do you have a mirror in your pocket? Because I can see myself in your pants.
-Are you a microwave? Because you make my heart race in 30 seconds.
-You must be a keyboard because you're just my type.
-Are you a construction worker? Because you're building something in my pants.
-Do you believe in fate? Because I think we were mint to be.
-Are you a pizza? Because you're cheesy but I still want a piece.
-You're hotter than the bottom of my laptop.
-Are you my homework? Because I should be doing you right now.
-Do you like to draw? Because I put the D in Raw.
-Are you a smoke alarm? Because you're loud and annoying, but you could save my life.
-You're like a dictionary—you add meaning to my life and you're thick.
-Are you my phone? Because I can't stop looking at you.
-Do you work at a bakery? Because you're a cutie pie.
-Are you a tornado? Because you're spinning my head right round.
-You must be a ninja because you snuck into my heart.
-Are you a light bulb? Because you brighten up my day.
-Do you have a GPS? Because I keep getting lost in your eyes.
-You're like a good book—hard to put down and full of good stuff.
-Are you a volcano? Because you're smoking hot.
-Do you like Mexican food? Because you're nacho average person.
-Are you a traffic light? Because stop, you're beautiful.
-You must be a magnet because you're attracting me.
-Are you a computer? Because you turn my software into hardware.
-Do you have a quarter? Because I want to call my mom and tell her I met 'the one'.
-You're like a fine whiskey—smooth, strong, and you get me drunk.
-Are you a bank? Because you've got my interest and I want to make a deposit.
-You must be a camera because every time I see you, I smile.
-Are you a keyboard? Because you're just my type and I want to touch you all night.
-Do you like science? Because I've got my ion you.
-You're like a shooting star—rare, beautiful, and I made a wish on you.
-Are you a library book? Because I'm checking you out.
-Do you have a name, or can I call you mine?
-You must be a time traveler because I see you in my future.
-Are you a compass? Because you always point me in the right direction.
-Do you like music? Because you're noteworthy.
-You're like a fine painting—beautiful to look at and worth a lot.
-Are you a garden? Because you're growing on me.
-Do you have a sunroof? Because you light up my world.
-You must be a diamond because you're precious and rare.
-Are you a rainbow? Because you color my world.
-Do you like coffee? Because you're brewing something in my heart.
-You're like a good song—I want to put you on repeat.
-Are you a telescope? Because you make everything look beautiful.
-Do you have a passport? Because you're worldly and I want to travel with you.
-You must be a sunrise because you make every day brighter.
-Are you a puzzle? Because I want to figure you out.
-Do you like adventure? Because you're taking my breath away.
-You're like a good movie—entertaining and I don't want it to end.
-Are you a chef? Because you're cooking up something special in my heart.
-Do you have a degree? Because you're smart and beautiful.
-You must be a superhero because you saved my day.
-Are you a flower? Because you're blooming beautiful.
-Do you like art? Because you're a masterpiece.
-You're like a good joke—you make me laugh and feel good.
-Are you a pilot? Because you're flying high in my heart.
-Do you have a driver's license? Because you're driving me crazy.
-You must be a doctor because you just cured my loneliness.
-Are you a teacher? Because you're teaching me what love feels like.
-Do you like dancing? Because you're making my heart dance.
-You're like a good meal—satisfying and I want seconds.
-Are you a sailor? Because you're navigating straight to my heart.
-Do you have a green thumb? Because you're making my love grow.
-You must be a scientist because you've created a reaction in my heart.
-Are you a writer? Because you're writing a new chapter in my life.
-Do you like sports? Because you're playing for keeps with my heart.
-You're like a good vacation—relaxing and I don't want it to end.
-Are you a musician? Because you're playing all the right notes.
-Do you have a toolbox? Because you're fixing everything that's broken in me.
-You must be a architect because you're building something beautiful in my heart.
-Are you a therapist? Because you're healing my soul.
-Do you like fishing? Because you've caught my heart.
-You're like a good wine—you get better with every sip.
-Are you a firefighter? Because you're putting out the fire in my heart and starting a new one.
-Do you have a magic wand? Because you've cast a spell on me.
-You must be a guardian angel because you're protecting my heart.
-Are you a photographer? Because you're capturing all my attention.
-Do you like hiking? Because you're taking me to new heights.
-You're like a good story—captivating and I want to know how it ends.
-Are you a locksmith? Because you've unlocked something in my heart.
-Do you have a crystal ball? Because I see us together in the future.
-You must be a treasure hunter because you've found the key to my heart.
-Are you a fortune teller? Because I can see us together.
-Are you my future? Because I can picture you in all of it now.`;
+I must be a bad investment, 'cause I keep giving you all my interest.
+You must be crypto, 'cause I don't really understand you but I'm still investing.
+Are you taxes? Because I want to deduct your clothes.
+Are you a bet? Because I'm willing to lose everything on you tonight.
+Are you art? Because I want to nail you against my wall.
+Are you a locksmith? Because I need you to bang my box open.
+You must be my homework, 'cause I should be doing you...
+Are you a train? Because I want to get railed by you.
+Are you a vending machine? Because I want to press your buttons and grab your goods.
+Are you an overdue library book? Because you've got FINE written all over you.
+Are you a conspiracy theory? Because you're hard to believe but I'm obsessed.
+Are you a Sunday morning? Because I want to spend you in bed.
+Are you the moon? Because even when you're far, I can't stop staring.
+Are you a hangover? Because I want to regret you tomorrow.
+Are you gravity? Because you've got me falling and there's no escape.
+Are you the ocean? Because I could drown in you and die happy.
+Are you a bar tab? Because I keep adding to you and forgetting my limits.
+Are you chaos? Because I like what you do to my peace.
+Are you a rumor? Because I can't wait to spread you.
+Are you an eclipse? Because everything stops when you show up.
+Are you my flight? Because I'd risk missing you and losing everything.
+You're like my will to live—barely there, but I'll chase you anyway.
+Let's make bad decisions and blame it on astrology later.
+Are you a red flag? Because I'm colorblind when you're this hot.
+Are you my ex's friend? Because I know I shouldn't, but damn.
+Are you my guilt? Because I only feel you after I finish.
+Are you a cigar? Because I know you're killing me but I still want you in my mouth.
+Are you sin? Because I can feel myself going to hell and smiling the whole way.
+Are you a fever? Because you're making me hot and a little dizzy.
+Are you summer? Because I want to sweat all over you.
+Are you my blanket? Because I want to wrap myself in you and do nothing all day.
+Are you a scratch I can't reach? Because you're driving me crazy in the best way.
+Are you my favorite song? Because I want you stuck in my head—and stuck to my body.
+Are you a lip gloss? Because I want you smeared all over my face.
+Are you a mirror selfie? Because I want to see myself all over you.
+Are you a slow song? Because I want to grind on you till the beat drops.
+Are you dessert? Because I want to save you for last… and savor every second.
+Are you sweatpants? Because I want to slide into you the second I get home.
+Are you my sleep paralysis demon? Because I see you in the dark and I'm not even mad.
+Are you overthinking? Because you won't get out of my head.
+Are you dread? Because I wake up thinking of you.
+Are you my inner voice? Because you're rude, sexy, and way too familiar.
+Are you my coping mechanism? Because I use you way too much.
+Are you insomnia? Because you keep me up all night… but I kinda like it.
+Are you a panic attack? Because you take my breath away.
+Are you a spiraling thought? Because I can't let go, even though I should.
+Are you lighting? Because you make everything look better when you're around.
+Are you my favorite outfit? Because you make me feel confident and slightly horny.
+Are you contour? Because you're shaping my every thought.
+Are you a bad haircut? Because even when you're wrong, you look good.
+Are you high-res? Because I can see every damn thing I want in you.
+Are you the sun? Because I can't stare too long without going blind.
+Are you a double take? Because I saw you, looked away, and then lost all composure.
+Are you cheekbones? Because you cut deep.
+Are you lip filler? Because you're plump, expensive, and I want a taste.
+Are you a reflection? Because I can't stop checking you out.
+Are you a slot machine? Because I want to keep pulling till I hit the jackpot.
+Are you a blackjack table? Because I know I should walk away but I'm going all in.
+Are you poker? Because I want to see all your tells—and raise you a night.
+Are you roulette? Because I'm betting everything on red.
+Are you the house? Because no matter what, you're winning tonight.
+Are you a pair of dice? Because I want to roll with you till morning.
+Are you a lucky streak? Because I don't want this to end.
+Are you a poker chip? Because I can't stop playing with you.
+Are you the dealer? Because you're holding all the cards tonight.
+Are you a flush? Because you've got me feeling hot and out of breath.
+Are you portrait mode? Because you blur out the world and make me focus on you.
+Are you a screenshot? Because I want to save this moment with you forever.
+Are you a camera lens? Because everything gets clearer when I'm with you.
+Are you flash? Because you just lit me up.
+Are you a DM? Because I'm sliding into you right now.
+Are you a live photo? Because I want to see you move in my hands.
+Are you an iPhone update? Because you showed up unexpectedly and changed everything.
+Are you a memory card? Because I want to fill you up with wild nights.
+Are you a selfie? Because I want you in my front and my back camera.
+Are you airplane mode? Because the second I'm with you, I don't need anyone else.
+Are you avocado toast? Because you're a little extra and I still want you every morning.
+Are you garlic bread? Because you've got me weak and coming back for more.
+Are you hot sauce? Because you spice up everything I touch.
+Are you cheese? Because I melt when you're near.
+Are you a buffet? Because I want to sample every part of you.
+Are you brunch? Because you're worth waking up for.
+Are you cake? Because I want you even when I'm full.
+Are you a snack? Because I could unwrap you any time.
+Are you takeout? Because I want you at my door in 30 minutes or less.
+Are you dessert first? Because I don't want to wait for a taste.
+Are you a Michelin star? Because you're rare, refined, and totally out of my league.
+Are you fries? Because I can't stop stealing glances—or bites.
+Are you ramen? Because I want to slurp you in public with no shame.
+Are you a steak? Because I'd risk it all just to get you rare and juicy.
+Are you medium rare? Because you're the perfect balance of wild and refined.
+You must be filet mignon, because you're high-class, tender, and way too good for me.
+Are you a steakhouse special? Because I didn't plan for you, but now I can't resist.
+Are you charcuterie? Because you've got all my favorite parts in one place.
+Are you pho? Because you're hot, addictive, and I want to slurp you slowly.
+Are you a bowl of pho? Because you've got me sweating and satisfied.
+You're like pho on a rainy day—comforting, steamy, and exactly what I need in bed.
+Are you sriracha in pho? Because you hit me in the throat in the best way possible.
+Are you busy right now? Or can I make you blush for a minute?
+I don't believe in love at first sight—but I'm willing to give you a second, third, and fourth.
+You look like someone I could get into very specific trouble with.
+I was going to wait until tomorrow to text you, but I couldn't risk someone else beating me to it.
+Are you a safe space? Because I already feel calm around you.
+If you were a moment, you'd be golden hour—effortlessly warm and beautiful.
+Are you a plot twist? Because I didn't see you coming but I'm into it.
+You seem like the kind of person I'd accidentally fall in love with over fries and sarcasm.
+Are you my future? Because I can picture you in all of it now.
+I was looking for peace and then you walked in—now I want chaos and you.
+Are you the one? Because I swore I wasn't looking and here you are anyway.
+Are you a good idea? Because my heart says yes and my brain is lagging behind.
+You give the word 'yes' a whole new level of temptation.
+You must be the answer to every 'what if' I've ever had.
+Are you a Sunday afternoon? Because I want to waste hours getting lost in you.
+Are you a crossover? Because you just broke my ankles and stole my heart.
+Are you a technical foul? Because you're making me lose control.
+Are you the playoffs? Because everything about you is intense and I live for it.
+Are you a timeout? Because I need a moment to catch my breath around you.
+Are you a buzzer beater? Because you showed up at the last second and changed everything.
+Are you a poster dunk? Because you just put me on the highlight reel.
+Are you a trade deadline? Because I'd give up everything to get you.
+Are you aperture priority? Because you control how much light enters my life.
+Are you golden hour? Because everything looks perfect when you're around.
+Are you depth of field? Because you're in focus and everything else is blurry.
+Are you manual focus? Because I want to take my time getting you just right.
+Are you a long exposure? Because I want to capture every moment with you.
+Are you RAW format? Because you're unfiltered and exactly what I need.
+Are you a lens cap? Because you protect what's most important to me.
+Are you a tripod? Because you keep me steady when everything else shakes.
+Are you a polaroid? Because I want to shake you and watch you develop.
+Are you ASMR? Because you give me tingles in all the right places.
+Are you my Spotify Wrapped? Because you're all I listened to this year.
+Are you a Netflix password? Because I want to share you but keep you exclusive.
+Are you an Amazon package? Because I've been tracking you all day and can't wait for you to arrive.
+Are you WiFi? Because I'm feeling a strong connection and I don't want to disconnect.
+Are you a software update? Because you're improving everything about my system.
+Are you dark mode? Because you're easier on my eyes and make everything better.
+Are you AirPods? Because I want to put you in both ears and tune out the world.
+Are you a notification? Because you make my heart buzz every time you pop up.
+Are you Face ID? Because you unlock something in me nobody else can access.
+Are you a blue checkmark? Because you're verified hot and everyone wants you.
+Are you a close friend story? Because I want to share my secrets with you.
+Are you seen at 2am? Because I read your message and couldn't sleep.
+Are you typing... ? Because you keep me waiting and I love the anticipation.
+Are you a voice note? Because I want to hear you moan... I mean, talk.
+Are you screen time? Because I spend way too much time thinking about you.
+Are you low battery? Because you make my heart race when you're almost gone.
+Are you a charger? Because you give me life when I'm completely drained.
+Are you 5G? Because you're the future and you're making everything faster.
+Are you incognito mode? Because what happens with you stays with you.
+Are you a backup? Because I need you to save me when everything crashes.
+Are you kimchi? Because you're fermented perfection and I'm addicted.
+Are you bubble tea? Because you're sweet, fun to suck on, and I want you in my mouth.
+Are you korean BBQ? Because I want to grill you slowly and savor every bite.
+Are you soju? Because you're smooth going down but you hit hard later.
+Are you pasta? Because I want to fork you all night long.
+Are you pizza? Because even when you're bad, you're still good, and I want a piece.
+Are you ice cream? Because you're cold but you make me melt.
+Are you coffee? Because you wake me up and I need you every morning.
+Are you wine? Because you get better with time and make me say things I shouldn't.
+Are you tequila? Because you make me forget my problems and do questionable things.
+Are you champagne? Because you're bubbly, expensive, and perfect for celebrating.
+Are you whiskey? Because you burn going down but I keep coming back for more.
+Are you a martini? Because you're sophisticated, strong, and you get me drunk fast.
+Are you my therapist? Because I want to lay down and tell you all my problems.
+Are you my student loan? Because you own me and I'll be paying you back for years.
+Are you my credit score? Because you go up and down but I'm always checking on you.
+Are you my rent? Because you're expensive, due every month, but I can't live without you.
+Are you my phone bill? Because you're a monthly commitment I actually want to make.
+Are you my car payment? Because you're a luxury I can't afford but desperately need.
+Are you my subscription service? Because I keep paying for you even when I forget to use you.
+Are you a speeding ticket? Because you're unexpected, expensive, but worth the thrill.`;
 
   // Process the data immediately
   const lines = pickupLinesData
@@ -2174,14 +2090,20 @@ function initCodeDemo() {
   const nextBtn = document.createElement("button");
   nextBtn.textContent = "Next Example";
   nextBtn.style.marginTop = "20px";
-  nextBtn.style.padding = "10px 20px";
+  nextBtn.style.padding =
+    "clamp(12px, 3vw, 16px) clamp(20px, 5vw, 30px)"; /* Bigger responsive padding */
   nextBtn.style.backgroundColor = "#FF6B6B";
   nextBtn.style.color = "white";
   nextBtn.style.border = "none";
-  nextBtn.style.borderRadius = "5px";
+  nextBtn.style.borderRadius = "8px"; /* Slightly more rounded */
   nextBtn.style.cursor = "pointer";
   nextBtn.style.display = "block";
   nextBtn.style.margin = "20px auto";
+  nextBtn.style.fontSize =
+    "clamp(14px, 3.5vw, 16px)"; /* Responsive font size */
+  nextBtn.style.fontWeight = "bold"; /* Make it stand out more */
+  nextBtn.style.minHeight = "48px"; /* Good touch target */
+  nextBtn.style.transition = "all 0.3s ease"; /* Smooth hover */
 
   // Add button after the entire code view container
   const codeView = document.getElementById("code-view");

@@ -991,10 +991,10 @@ body.terminal-hidden {
 /* Particle Effect */
 @keyframes float {
     0%, 100% {
-        transform: translateY(0px);
+        transform: translateY(10px); /* Start slightly below center */
     }
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-10px); /* Move to slightly above center */
     }
 }
 
@@ -1252,8 +1252,18 @@ body.terminal-hidden {
 
 .affirmation-controls {
   display: flex;
-  gap: 1rem;
+  flex-direction: column; /* Stack buttons vertically */
+  gap: 0.8rem;
   align-items: center;
+}
+
+/* On larger screens, show buttons side by side */
+@media (min-width: 600px) {
+  .affirmation-controls {
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+  }
 }
 
 .generate-btn {
@@ -1347,7 +1357,7 @@ body.terminal-hidden {
 /* Mobile - smaller font */
 @media (max-width: 768px) {
   .terminal-body {
-    font-size: 10px;
+    font-size: 9px; /* Even smaller on mobile */
     line-height: 1.5;
   }
 }
@@ -1823,7 +1833,7 @@ body.terminal-hidden {
 @media (max-width: 480px) {
   /* Extra small phones */
   .terminal-body {
-    font-size: 9px; /* Very small for tiny phones */
+    font-size: 8px; /* Very small for tiny phones */
     line-height: 1.4; /* Tighter line spacing */
   }
   
@@ -2211,4 +2221,13 @@ body,
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+} 
+
+/* Mobile - shorter back button */
+@media (max-width: 768px) {
+  .back-btn {
+    padding: clamp(8px, 2.5vw, 10px) clamp(16px, 4vw, 20px); /* Shorter vertical padding */
+    min-height: 36px; /* Reduced from 44px */
+    font-size: clamp(13px, 3vw, 15px); /* Slightly smaller font */
+  }
 } 
