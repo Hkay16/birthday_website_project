@@ -56,9 +56,8 @@ const terminalMessages = [
 let currentMessageIndex = 0;
 let currentCharIndex = 0;
 let terminalTimeout;
-let userIsScrolling = false;
-let scrollTimeout;
-let lastScrollTop = 0;
+let autoScrollEnabled = true; // Start enabled
+let lastScrollPosition = 0;
 
 function typeTerminalMessage() {
   const output = document.getElementById("terminal-output");
@@ -69,13 +68,12 @@ function typeTerminalMessage() {
     output.textContent += currentMessage[currentCharIndex];
     currentCharIndex++;
 
-    // Only auto-scroll if user isn't manually scrolling
-    if (terminalBody && !userIsScrolling) {
-      // Check if user is near the bottom (within 50px) before auto-scrolling
-      const isNearBottom =
+    // Only auto-scroll if enabled AND user is at the very bottom
+    if (terminalBody && autoScrollEnabled) {
+      const isAtBottom =
         terminalBody.scrollTop >=
-        terminalBody.scrollHeight - terminalBody.clientHeight - 50;
-      if (isNearBottom) {
+        terminalBody.scrollHeight - terminalBody.clientHeight - 5;
+      if (isAtBottom) {
         terminalBody.scrollTop = terminalBody.scrollHeight;
       }
     }
@@ -86,12 +84,12 @@ function typeTerminalMessage() {
     currentMessageIndex++;
     currentCharIndex = 0;
 
-    // Only auto-scroll after line completion if user isn't scrolling
-    if (terminalBody && !userIsScrolling) {
-      const isNearBottom =
+    // Only auto-scroll after line completion if enabled AND at bottom
+    if (terminalBody && autoScrollEnabled) {
+      const isAtBottom =
         terminalBody.scrollTop >=
-        terminalBody.scrollHeight - terminalBody.clientHeight - 100;
-      if (isNearBottom) {
+        terminalBody.scrollHeight - terminalBody.clientHeight - 5;
+      if (isAtBottom) {
         terminalBody.scrollTop = terminalBody.scrollHeight;
       }
     }
@@ -136,6 +134,8 @@ function transitionToHub() {
 
   setTimeout(() => {
     terminal.classList.add("hidden");
+    // Enable body scrolling for the next phase
+    document.body.classList.add("terminal-hidden");
     celebration.classList.remove("hidden");
     celebration.classList.add("fade-in");
     initializeBirthdayCelebration();
@@ -151,6 +151,8 @@ function transitionFromCelebrationToHub() {
 
   setTimeout(() => {
     celebration.classList.add("hidden");
+    // Ensure body scrolling is enabled for hub
+    document.body.classList.add("terminal-hidden");
     hub.classList.remove("hidden");
     hub.classList.add("fade-in");
     initializeModules();
@@ -396,6 +398,8 @@ function openSpectacularGift() {
 
       // Show hub (but it's hidden by confetti)
       const hub = document.getElementById("main-hub");
+      // Enable body scrolling for the hub
+      document.body.classList.add("terminal-hidden");
       hub.classList.remove("hidden");
       hub.classList.add("fade-in");
       initializeModules();
@@ -2622,97 +2626,21 @@ function showComingSoon() {
 
 // Initialize everything when page loads
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize mobile optimizations
-  optimizeForMobile();
-  handleCanvasResize();
-  addTouchSupport();
+  // Ensure body starts in correct scroll state for terminal
+  document.body.classList.remove("terminal-hidden");
 
-  // Start terminal sequence after a brief delay
-  setTimeout(() => {
-    typeTerminalMessage();
-  }, 500);
-
-  // Add keyboard shortcut for skip (S key or Space)
-  document.addEventListener("keydown", (event) => {
-    if (
-      (event.key === "s" || event.key === "S" || event.key === " ") &&
-      !document.getElementById("terminal").classList.contains("hidden")
-    ) {
-      skipToNext();
-    }
-  });
-
-  // Prevent zoom on double-tap for iOS
-  let lastTouchEnd = 0;
-  document.addEventListener(
-    "touchend",
-    function (event) {
-      const now = new Date().getTime();
-      if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-      }
-      lastTouchEnd = now;
-    },
-    false
-  );
-
-  // Prevent zoom on pinch for iOS (except on canvas elements)
-  document.addEventListener("gesturestart", function (e) {
-    if (!e.target.tagName.toLowerCase() === "canvas") {
-      e.preventDefault();
-    }
-  });
-
-  // Set up scroll detection for terminal
+  // Set up simple scroll detection for terminal
   setTimeout(() => {
     const terminalBody = document.querySelector(".terminal-body");
     if (terminalBody) {
-      // Detect when user starts scrolling
       terminalBody.addEventListener("scroll", () => {
-        // Check if user scrolled up (indicates manual scrolling)
-        const currentScrollTop = terminalBody.scrollTop;
-        if (currentScrollTop < lastScrollTop) {
-          // User scrolled up - disable auto-scroll
-          userIsScrolling = true;
-          clearTimeout(scrollTimeout);
+        const scrollTop = terminalBody.scrollTop;
+        const scrollHeight = terminalBody.scrollHeight;
+        const clientHeight = terminalBody.clientHeight;
+        const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
 
-          // Re-enable auto-scroll after 3 seconds of no scrolling
-          scrollTimeout = setTimeout(() => {
-            userIsScrolling = false;
-          }, 3000);
-        }
-        lastScrollTop = currentScrollTop;
-      });
-
-      // Detect touch scrolling
-      let touchStartY = 0;
-      terminalBody.addEventListener("touchstart", (e) => {
-        touchStartY = e.touches[0].clientY;
-      });
-
-      terminalBody.addEventListener("touchmove", (e) => {
-        const touchY = e.touches[0].clientY;
-        const deltaY = touchStartY - touchY;
-
-        // If user is swiping up (deltaY > 0), they're scrolling up manually
-        if (deltaY > 10) {
-          userIsScrolling = true;
-          clearTimeout(scrollTimeout);
-
-          scrollTimeout = setTimeout(() => {
-            userIsScrolling = false;
-          }, 3000);
-        }
-      });
-
-      // Reset scroll behavior when user reaches bottom
-      terminalBody.addEventListener("scroll", () => {
-        const isAtBottom =
-          terminalBody.scrollTop >=
-          terminalBody.scrollHeight - terminalBody.clientHeight - 10;
-        if (isAtBottom) {
-          userIsScrolling = false; // Re-enable auto-scroll when at bottom
-        }
+        // Enable auto-scroll only when user is within 5px of the bottom
+        autoScrollEnabled = distanceFromBottom <= 5;
       });
     }
   }, 100);
@@ -2737,7 +2665,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Already handled above - removed duplicate
+  // Prevent zoom on double-tap for iOS
+  let touchEndTime = 0;
+  document.addEventListener(
+    "touchend",
+    function (event) {
+      const now = new Date().getTime();
+      if (now - touchEndTime <= 300) {
+        event.preventDefault();
+      }
+      touchEndTime = now;
+    },
+    false
+  );
+
+  // Prevent zoom on pinch for iOS (except on canvas elements)
+  document.addEventListener("gesturestart", function (e) {
+    if (!e.target.tagName.toLowerCase() === "canvas") {
+      e.preventDefault();
+    }
+  });
 });
 
 // Update todo status

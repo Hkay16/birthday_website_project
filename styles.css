@@ -13,14 +13,25 @@
 html {
     color-scheme: dark !important;
     background: #0a0a0a !important;
+    overflow: hidden; /* Prevent HTML scrolling */
+    height: 100%;
 }
 
 body {
     font-family: 'JetBrains Mono', monospace;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%) !important;
     color: #ffffff !important;
-    overflow-x: hidden;
+    overflow: hidden; /* Prevent body scrolling when terminal is active */
     min-height: 100vh;
+    position: fixed; /* Lock body position */
+    width: 100%;
+    height: 100%;
+}
+
+/* Allow body scrolling when terminal is hidden */
+body.terminal-hidden {
+    overflow: auto;
+    position: static;
 }
 
 /* Utility Classes */
@@ -1300,6 +1311,7 @@ body {
   z-index: 1000;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* Prevent any scrolling on the container itself */
 }
 
 .terminal-header {
@@ -1310,6 +1322,23 @@ body {
   gap: clamp(10px, 3vw, 15px);
   border-bottom: 1px solid #444;
   min-height: 44px; /* Minimum touch target */
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.terminal-body {
+  flex: 1;
+  padding: clamp(12px, 3.5vw, 18px); /* Consistent padding all around */
+  background: #0a0a0a;
+  font-size: clamp(13px, 3.8vw, 15px); /* Slightly smaller for better mobile fit */
+  line-height: 1.6;
+  overflow-y: auto; /* Only vertical scrolling allowed */
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  /* Force exact dimensions to avoid layout issues */
+  height: calc(100vh - 44px - 2 * clamp(8px, 2vw, 20px)); /* Full height minus header */
+  /* Enable momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent pull-to-refresh on mobile */
+  overscroll-behavior: contain;
 }
 
 .terminal-controls {
@@ -1334,23 +1363,6 @@ body {
   font-size: clamp(11px, 2.8vw, 13px); /* Smaller terminal title for mobile */
 }
 
-.terminal-body {
-  flex: 1;
-  padding: clamp(12px, 3.5vw, 18px); /* Reduced padding for more content space */
-  /* Add extra padding on right and bottom to avoid skip button */
-  padding-right: clamp(85px, 22vw, 120px); /* Space for skip button */
-  padding-bottom: clamp(70px, 18vw, 90px); /* Space below for skip button */
-  background: #0a0a0a;
-  font-size: clamp(13px, 3.8vw, 15px); /* Slightly smaller for better mobile fit */
-  line-height: 1.6;
-  overflow-y: auto; /* Always allow scrolling */
-  overflow-x: hidden; /* Prevent horizontal scroll */
-  /* Force minimum height to enable scrolling */
-  min-height: calc(100vh - 60px);
-  /* Enable momentum scrolling on iOS */
-  -webkit-overflow-scrolling: touch;
-}
-
 #terminal-output {
   white-space: pre-wrap;
   color: #00ff41;
@@ -1370,7 +1382,7 @@ body {
 }
 
 .skip-btn {
-  position: fixed; /* Changed from absolute to fixed */
+  position: absolute; /* Position relative to terminal-container */
   bottom: clamp(15px, 4vw, 20px);
   right: clamp(15px, 4vw, 20px);
   background: rgba(0, 255, 255, 0.2);
@@ -1782,9 +1794,7 @@ body {
   /* Extra small phones */
   .terminal-body {
     font-size: 13px; /* Smaller text for better fit */
-    padding: 10px;
-    padding-right: clamp(80px, 20vw, 100px); /* Reduced padding */
-    padding-bottom: clamp(60px, 15vw, 80px);
+    padding: 10px; /* Consistent padding all around */
     line-height: 1.4; /* Tighter line spacing */
   }
   
@@ -2078,6 +2088,16 @@ body,
 .hub-container {
   background: #0a0a0a !important;
   color: #ffffff !important;
+}
+
+/* Ensure single-scroll behavior for each page */
+.epic-birthday-page,
+#main-hub,
+#module-views {
+  overflow-y: auto; /* Allow scrolling on these containers */
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  height: 100vh; /* Full viewport height */
+  overscroll-behavior: contain; /* Prevent pull-to-refresh and bounce */
 }
 
 /* Ensure module cards maintain dark theme */
