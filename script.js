@@ -2213,17 +2213,19 @@ element.style.borderRadius = '20px';
 //    understands each part of these instructions...`,
       apply: (element) => {
         element.style.background = `rgb(150, 100, 255)`;
-        element.style.width = "300px";
-        element.style.height = "150px";
+        element.style.width = "80%";
+        element.style.maxWidth = "300px";
+        element.style.height = "clamp(120px, 20vw, 150px)";
         element.style.borderRadius = "20px";
         element.style.textAlign = "center";
         element.style.display = "flex";
         element.style.alignItems = "center";
         element.style.justifyContent = "center";
         element.style.color = "white";
-        element.style.fontSize = "18px";
+        element.style.fontSize = "clamp(14px, 3.5vw, 18px)";
         element.style.fontWeight = "bold";
         element.style.textShadow = "2px 2px 4px rgba(0,0,0,0.5)";
+        element.style.margin = "0 auto";
         element.textContent = "Purple Box!";
       },
     },
@@ -2256,8 +2258,9 @@ const color = \`rgb(\${red}, \${green}, \${blue})\`;
 element.style.background = color;`,
       apply: (element) => {
         element.style.background = `rgb(150, 100, 255)`;
-        element.style.width = "350px";
-        element.style.height = "200px";
+        element.style.width = "85%";
+        element.style.maxWidth = "350px";
+        element.style.height = "clamp(160px, 25vw, 200px)";
         element.style.borderRadius = "15px";
         element.style.textAlign = "center";
         element.style.display = "flex";
@@ -2265,10 +2268,11 @@ element.style.background = color;`,
         element.style.alignItems = "center";
         element.style.justifyContent = "center";
         element.style.color = "white";
-        element.style.fontSize = "16px";
+        element.style.fontSize = "clamp(13px, 3vw, 16px)";
         element.style.fontWeight = "bold";
         element.style.textShadow = "1px 1px 2px rgba(0,0,0,0.7)";
         element.style.padding = "20px";
+        element.style.margin = "0 auto";
         element.innerHTML =
           "🔴 Red: 150/255 (59%)<br>🟢 Green: 100/255 (39%)<br>🔵 Blue: 255/255 (100%)<br><br>= Purple Color!";
       },
@@ -2303,8 +2307,9 @@ element.style.borderRadius = '20px';
 // Instead of sharp corners ■ make them curved ●`,
       apply: (element) => {
         element.style.background = `rgb(150, 100, 255)`;
-        element.style.width = "300px";
-        element.style.height = "150px";
+        element.style.width = "80%";
+        element.style.maxWidth = "300px";
+        element.style.height = "clamp(120px, 20vw, 150px)";
         element.style.borderRadius = "20px";
         element.style.textAlign = "center";
         element.style.display = "flex";
@@ -2312,10 +2317,11 @@ element.style.borderRadius = '20px';
         element.style.alignItems = "center";
         element.style.justifyContent = "center";
         element.style.color = "white";
-        element.style.fontSize = "14px";
+        element.style.fontSize = "clamp(12px, 2.8vw, 14px)";
         element.style.fontWeight = "bold";
         element.style.textShadow = "1px 1px 2px rgba(0,0,0,0.7)";
         element.style.border = "2px dashed rgba(255,255,255,0.5)";
+        element.style.margin = "0 auto";
         element.innerHTML =
           "300 pixels wide<br>×<br>150 pixels tall<br><br>= 45,000 purple pixels!";
       },
@@ -2352,8 +2358,9 @@ const red = 150;  // This is what we write...
 console.log("Binary magic happening in memory!");`,
       apply: (element) => {
         element.style.background = `linear-gradient(45deg, #1a1a1a, #2a2a2a)`;
-        element.style.width = "400px";
-        element.style.height = "200px";
+        element.style.width = "85%";
+        element.style.maxWidth = "400px";
+        element.style.height = "clamp(160px, 25vw, 200px)";
         element.style.borderRadius = "15px";
         element.style.textAlign = "center";
         element.style.display = "flex";
@@ -2361,10 +2368,11 @@ console.log("Binary magic happening in memory!");`,
         element.style.alignItems = "center";
         element.style.justifyContent = "center";
         element.style.color = "#00ff00";
-        element.style.fontSize = "14px";
+        element.style.fontSize = "clamp(11px, 2.5vw, 14px)";
         element.style.fontFamily = "monospace";
         element.style.padding = "15px";
         element.style.border = "1px solid #00ff00";
+        element.style.margin = "0 auto";
         element.innerHTML = `
           <div style="color: #ffff00; margin-bottom: 10px;">MEMORY DUMP:</div>
           <div>Address: 0x7FFEE4B3A5C0</div>
@@ -2408,8 +2416,10 @@ element.style.height = '150px';  // Takes 150 pixels vertically
 // Each pixel needs its X,Y location + RGB colors tracked`,
       apply: (element) => {
         element.style.background = `linear-gradient(45deg, #2c1810, #1a0f08)`;
-        element.style.width = "450px";
-        element.style.height = "220px";
+        element.style.width = "90%"; /* Responsive width instead of 450px */
+        element.style.maxWidth = "450px"; /* Maximum width for larger screens */
+        element.style.height =
+          "clamp(180px, 25vw, 220px)"; /* Responsive height */
         element.style.borderRadius = "15px";
         element.style.textAlign = "center";
         element.style.display = "flex";
@@ -2417,11 +2427,13 @@ element.style.height = '150px';  // Takes 150 pixels vertically
         element.style.alignItems = "center";
         element.style.justifyContent = "center";
         element.style.color = "#ffa500";
-        element.style.fontSize = "13px";
+        element.style.fontSize =
+          "clamp(11px, 2.5vw, 13px)"; /* Responsive font */
         element.style.fontFamily = "monospace";
         element.style.padding = "15px";
         element.style.border = "2px solid #ffa500";
         element.style.boxShadow = "0 0 20px rgba(255,165,0,0.3)";
+        element.style.margin = "0 auto"; /* Center the element */
         element.innerHTML = `
           <div style="color: #ff6644; margin-bottom: 8px; font-weight: bold;">📍 PIXEL COORDINATES</div>
           <div style="margin: 5px 0;">Screen: 1920×1080 = 2,073,600 pixels</div>
@@ -2462,8 +2474,9 @@ const redVoltage = (150 / 255) * 3.3;  // = 1.94 volts
 // Each LED gets exactly the right voltage at the right time`,
       apply: (element) => {
         element.style.background = `radial-gradient(circle, #0f1419, #1a0a1f)`;
-        element.style.width = "480px";
-        element.style.height = "250px";
+        element.style.width = "90%";
+        element.style.maxWidth = "480px";
+        element.style.height = "clamp(200px, 30vw, 250px)";
         element.style.borderRadius = "20px";
         element.style.textAlign = "center";
         element.style.display = "flex";
@@ -2471,11 +2484,12 @@ const redVoltage = (150 / 255) * 3.3;  // = 1.94 volts
         element.style.alignItems = "center";
         element.style.justifyContent = "center";
         element.style.color = "#00ffaa";
-        element.style.fontSize = "13px";
+        element.style.fontSize = "clamp(10px, 2.2vw, 13px)";
         element.style.fontFamily = "monospace";
         element.style.padding = "20px";
         element.style.border = "2px solid #00ffaa";
         element.style.boxShadow = "0 0 25px rgba(0,255,170,0.4)";
+        element.style.margin = "0 auto";
         element.innerHTML = `
           <div style="color: #ff4488; margin-bottom: 8px; font-weight: bold;">⚡ LED CONTROL SYSTEM ⚡</div>
           <div style="margin: 4px 0;">6,220,800 LEDs controlled individually</div>
@@ -2530,8 +2544,10 @@ element.style.background = color;
           rgb(255, 100, 150) 50%,
           rgb(150, 255, 100) 75%,
           rgb(255, 150, 100) 100%)`;
-        element.style.width = "520px";
-        element.style.height = "280px";
+        element.style.width = "95%"; /* Responsive width instead of 520px */
+        element.style.maxWidth = "520px"; /* Maximum width for larger screens */
+        element.style.height =
+          "clamp(220px, 30vw, 280px)"; /* Responsive height */
         element.style.borderRadius = "20px";
         element.style.textAlign = "center";
         element.style.display = "flex";
@@ -2539,11 +2555,13 @@ element.style.background = color;
         element.style.alignItems = "center";
         element.style.justifyContent = "center";
         element.style.color = "white";
-        element.style.fontSize = "14px";
+        element.style.fontSize =
+          "clamp(12px, 2.8vw, 14px)"; /* Responsive font */
         element.style.fontWeight = "bold";
         element.style.textShadow = "2px 2px 4px rgba(0,0,0,0.8)";
         element.style.padding = "20px";
         element.style.boxShadow = "0 0 30px rgba(150,100,255,0.6)";
+        element.style.margin = "0 auto"; /* Center the element */
         element.innerHTML = `
           <div style="font-size: 16px; margin-bottom: 10px;">The Complete Journey</div>
           <div style="margin: 5px 0;">Code → Binary → Coordinates → Voltage → Light</div>

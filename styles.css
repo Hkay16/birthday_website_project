@@ -1602,7 +1602,19 @@ body.terminal-hidden {
   color: #64b5f6;
   font-size: clamp(1.8rem, 6vw, 2.5rem);
   line-height: 1.2;
-  word-wrap: break-word;
+  /* Better text wrapping - break between words, not inside them */
+  overflow-wrap: break-word;
+  word-break: keep-all; /* Prevent breaking inside words */
+  hyphens: none; /* Disable hyphenation */
+  white-space: nowrap; /* Keep on one line if possible */
+}
+
+/* On very small screens, allow wrapping but at word boundaries */
+@media (max-width: 480px) {
+  .view-header h2 {
+    white-space: normal; /* Allow wrapping on very small screens */
+    word-break: normal; /* Break at normal word boundaries */
+  }
 }
 
 /* Mobile-first Code Explanation Layout */
@@ -2043,6 +2055,13 @@ body {
     line-height: 1.3; /* Better line height for mobile */
     hyphens: auto; /* Allow word breaking on narrow screens */
     overflow-wrap: break-word;
+  }
+  
+  /* Override for view headers - keep headings intact */
+  .view-header h2 {
+    hyphens: none !important; /* Disable hyphenation for view headers */
+    word-break: keep-all !important; /* Prevent breaking inside words */
+    overflow-wrap: normal !important; /* Don't break words */
   }
   
   p, div, span {
