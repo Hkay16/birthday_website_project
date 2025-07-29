@@ -888,48 +888,171 @@ function initAffirmationsDemo() {
 
   // Embed the affirmations data directly
   const affirmationsData = `text,mood
-"Happy Birthday! You're another year wiser and more amazing.",BIRTHDAY
-"Every year you become more yourself - and that's beautiful to watch.",BIRTHDAY
-"Your birthday is a celebration of all the growth you've experienced.",BIRTHDAY
-"Another year means another level of understanding life unlocked.",LEARNING
-"You approach challenges with curiosity rather than fear - that's wisdom.",LEARNING
-"Your mind is like a garden that keeps growing new interesting thoughts.",LEARNING
-"You ask great questions, which shows you're always learning.",LEARNING
-"You have this wonderful balance of confidence and humility.",PSYCHOLOGY
-"Your emotional intelligence is one of your superpowers.",PSYCHOLOGY
-"You're getting better at understanding yourself each year.",PSYCHOLOGY
-"You listen to people in a way that makes them feel truly heard.",PSYCHOLOGY
-"Your empathy is a gift to everyone around you.",PSYCHOLOGY
-"You handle setbacks with grace and bounce back stronger.",PSYCHOLOGY
-"Your authenticity makes people feel safe to be themselves.",FRIENDSHIP
-"You're the kind of friend who remembers the little things that matter.",FRIENDSHIP
-"People trust you because you're genuinely trustworthy.",FRIENDSHIP
-"You have this rare quality of being both fun and reliable.",FRIENDSHIP
-"Your sense of humor brightens people's days.",FRIENDSHIP
-"You make ordinary moments feel special just by being there.",FRIENDSHIP
-"Your curiosity about the world is contagious.",INSPIRING
+"You carry yourself with something that turns heads.",CONFIDENT
+"Your presence has weight - people notice when you walk in.",CONFIDENT
+"You've got this combination of smart and attractive that works.",CONFIDENT
+"Your voice hits different — there's something grounded in it.",CONFIDENT
+"You have this magnetic energy that draws people in.",CONFIDENT
+"You're the kind of attractive that grows on people and then never leaves.",CONFIDENT
+"Your mind is as attractive as anything else about you.",CONFIDENT
+"You're genuinely cute in ways that catch people off guard.",CONFIDENT
+"You're hot and you don't even have to try.",CONFIDENT
+"Your hair looks really good today.",CONFIDENT
+"Your smile is the kind that sticks with people.",CONFIDENT
+"You have incredible strength, even when you don't feel it.",ENCOURAGING
+"You are enough, exactly as you are, right now.",ENCOURAGING
+"Your heart is genuine, and that matters more than you know.",ENCOURAGING
+"You matter more than you realize.",ENCOURAGING
+"Your mind works in ways that surprise people in good ways.",ENCOURAGING
+"Your existence makes the world a little brighter.",ENCOURAGING
+"You deserve patience, especially from yourself.",ENCOURAGING
+"Your instincts about people are usually right.",ENCOURAGING
+"Your style is distinctly you, and it works perfectly.",ENCOURAGING
+"Your laugh is contagious in the best way.",ENCOURAGING
+"You are not alone, even when it feels that way.",SUPPORTIVE
+"The right people will see your value.",SUPPORTIVE
+"You have the capacity to build meaningful connections.",SUPPORTIVE
+"Your friendship is a gift to anyone who receives it.",SUPPORTIVE
+"You're the kind of person others feel safe around.",SUPPORTIVE
+"Your care for others doesn't go unnoticed.",SUPPORTIVE
+"You make people feel heard and understood.",SUPPORTIVE
+"Someone out there is grateful you exist.",SUPPORTIVE
+"You have a way of making others feel comfortable.",SUPPORTIVE
+"You attract people who appreciate authenticity.",SUPPORTIVE
+"Starting over takes courage, and you have it.",MOTIVATING
+"Every introduction is a chance for a fresh start.",MOTIVATING
+"You're brave for putting yourself out there.",MOTIVATING
+"Your resilience is quietly inspiring.",MOTIVATING
+"Growing pains mean you're actually growing.",MOTIVATING
+"Each day is a new opportunity to surprise yourself.",MOTIVATING
+"You're becoming who you're meant to be.",MOTIVATING
+"Your story is still being written, and it's going to be meaningful.",MOTIVATING
+"Reinventing yourself is a sign of wisdom, not weakness.",MOTIVATING
+"You have everything within you to build the life you want.",MOTIVATING
+"Fresh starts are gifts we give ourselves.",MOTIVATING
+"You're exactly where you need to be for your next chapter.",MOTIVATING
+"It's okay to feel overwhelmed sometimes.",CALMING
+"Your anxiety doesn't define you or limit your potential.",CALMING
+"You're learning to navigate new feelings, and that takes time.",CALMING
+"Breathe. You've overcome difficult moments before.",CALMING
+"This feeling is temporary, but your strength is permanent.",CALMING
+"You're allowed to take things one day at a time.",CALMING
+"Your pace is the right pace for you.",CALMING
+"It's okay to ask for help when you need it.",CALMING
+"You're handling more than most people could.",CALMING
+"Your mind is learning new ways to cope, and that's growth.",CALMING
+"You don't have to be strong all the time.",CALMING
+"Rest is productive when you need to recharge.",CALMING
+"This anxiety is temporary - your strength isn't.",CALMING
+"You deserve to treat yourself with kindness.",SELF_CARE
+"Taking care of yourself isn't selfish, it's necessary.",SELF_CARE
+"You're allowed to prioritize your own wellbeing.",SELF_CARE
+"Small acts of self-love add up to big changes.",SELF_CARE
+"You deserve comfort, especially during tough times.",SELF_CARE
+"Your needs matter and deserve attention.",SELF_CARE
+"It's okay to say no to things that drain you.",SELF_CARE
+"You're worthy of the same compassion you give others.",SELF_CARE
+"Taking a break doesn't make you weak.",SELF_CARE
+"Your mental health is just as important as your physical health.",SELF_CARE
+"You're allowed to have boundaries, and they're healthy.",SELF_CARE
+"Healing isn't linear, and that's perfectly normal.",SELF_CARE
+"Your comfort zone is valid until you're ready to expand it.",SELF_CARE
+"You don't owe anyone an explanation for taking care of yourself.",SELF_CARE
+"Your future self will thank you for not giving up.",HOPEFUL
+"This difficult chapter doesn't define your whole story.",HOPEFUL
+"You have real moments still ahead of you.",HOPEFUL
+"Your dreams are still valid and achievable.",HOPEFUL
+"The best version of yourself is still emerging.",HOPEFUL
+"Life has meaningful surprises waiting for you.",HOPEFUL
+"You're going to look back on this time and be proud of your strength.",HOPEFUL
+"Everything you're going through is preparing you for something better.",HOPEFUL
+"You haven't lost your edge — you're just taking a breather.",AFFIRMING
+"Your presence is strong enough that you don't have to perform.",AFFIRMING
+"You haven't missed your moment — it hasn't even arrived yet.",AFFIRMING
+"This isn't the end of anything. It's just a detour.",AFFIRMING
+"You being here — existing, even on low battery — makes a difference.",AFFIRMING
+"The version of you coming next is going to respect this one for not giving up.",AFFIRMING
+"You're still sharp. Still capable. Still here.",AFFIRMING
+"You're not soft. You're steel — even if this has tested you.",AFFIRMING
+"The low moments feel longer than they last. Hold the line.",AFFIRMING
+"This year could still hold something you didn't see coming.",AFFIRMING
+"You don't have to believe in everything right now. Just don't quit.",AFFIRMING
+"You carry yourself with something most people wish they had.",AFFIRMING
+"You've got a calm presence that people notice.",AFFIRMING
+"You listen in a way most people don't. That sticks with people.",AFFIRMING
+"You're not starting from scratch. You're starting from experience.",AFFIRMING
+"Your fear of being forgotten? That proves you've got more to give.",AFFIRMING
+"You're not failing — your brain's just adjusting to things it's never had to carry before.",AFFIRMING
+"Feeling off doesn't mean you've lost yourself.",AFFIRMING
+"You're still in control, even if it doesn't always feel like it.",AFFIRMING
+"It's okay to not be okay. You've earned that grace.",AFFIRMING
+"You don't need to pretend. You're allowed to be exactly how you are today.",AFFIRMING
+"You don't have to prove your worth — it's already there.",AFFIRMING
+"You deserve a win — and it's on the way.",AFFIRMING
+"There's nothing wrong with wanting peace.",AFFIRMING
+"It's okay if today isn't your favorite day. Tomorrow gets a shot too.",AFFIRMING
+"You're still the person people would bet on.",AFFIRMING
+"Your awkward moments don't define you - your comeback always does.",AFFIRMING
+"You've got this thing where you can make people feel seen.",AFFIRMING
+"Your humor hits different because it comes from somewhere real.",AFFIRMING
+"You're clever in ways that surprise people.",GENUINE
+"You have this way of being thoughtful that people remember.",GENUINE
+"You care about people in ways that actually matter to them.",GENUINE
+"You see things in ways that make others think differently.",APPRECIATIVE
+"You're the kind of person who remembers details that matter to people.",APPRECIATIVE
+"Your mind works in patterns that are genuinely impressive.",APPRECIATIVE
+"You have this quality of making complex things feel approachable.",GENUINE
+"Your kindness isn't performative - it's just who you are.",GENUINE
+"You're funnier than you think, in ways that actually land.",APPRECIATIVE
+"You balance being clever and kind better than most people.",APPRECIATIVE
+"Your depth shows up in conversations when people least expect it.",GENUINE
+"You're not trying to impress anyone, which is exactly what's impressive.",GENUINE
+"Your intelligence comes through in how you listen, not just how you speak.",APPRECIATIVE
+"You have this way of being present that makes people feel heard.",GENUINE
+"You're more perceptive about people than you probably realize.",GENUINE
+"Your thoughtfulness isn't an act - it's embedded in how you move through the world.",APPRECIATIVE
+"Your confidence has a foundation - it's not just an act.",GENUINE
+"You show up for people when it actually counts.",APPRECIATIVE
+"Your conversations have substance because you bring substance to them.",APPRECIATIVE
+"You're the type of person who makes others feel like they can step up.",GENUINE
+"Your mind works faster than most people give you credit for.",APPRECIATIVE
+"You have this ability to see opportunities where others see problems.",CONFIDENT
+"You understand people better than you let on.",APPRECIATIVE
+"You've built something good for yourself and that takes skill.",GENUINE
+"Your standards aren't too high - they're exactly where they should be.",CONFIDENT
+"This rough patch doesn't erase everything you've accomplished.",SUPPORTIVE
+"You've got good taste and the means to back it up.",CONFIDENT
+"Your success isn't accidental - you made the right moves.",CONFIDENT
+"You're used to winning, and this setback doesn't change that.",SUPPORTIVE
+"You're charming without trying to be.",CONFIDENT
+"It's okay to be flawed - that's what makes you real.",ENCOURAGING
+"Your skills are genuinely impressive.",APPRECIATIVE
 "You see possibilities where others see problems.",INSPIRING
 "Your enthusiasm for learning new things is infectious.",INSPIRING
+"You're proof that being smart and kind aren't mutually exclusive.",INSPIRING
+"Every mistake teaches you something valuable about life.",GROWTH
+"Your resilience is quietly inspiring to everyone who knows you.",GROWTH
+"You approach challenges with curiosity rather than fear - that's wisdom.",LEARNING
+"Your emotional intelligence is one of your superpowers.",PSYCHOLOGY
+"You handle setbacks with grace and bounce back stronger.",PSYCHOLOGY
+"People trust you because you're genuinely trustworthy.",FRIENDSHIP
+"You have this rare quality of being both fun and reliable.",FRIENDSHIP
+"You make ordinary moments feel special just by being there.",FRIENDSHIP
+"Your curiosity about the world is contagious.",INSPIRING
 "You inspire others by being brave enough to try new things.",INSPIRING
 "Your growth mindset helps you turn obstacles into opportunities.",INSPIRING
-"You're proof that being smart and kind aren't mutually exclusive.",INSPIRING
 "You have this beautiful way of finding meaning in everyday experiences.",REFLECTION
 "Your ability to reflect on experiences helps you grow continuously.",REFLECTION
-"You're developing wisdom by staying curious about yourself.",REFLECTION
 "You understand that vulnerability is actually a strength.",REFLECTION
 "Your self-awareness is helping you become who you want to be.",REFLECTION
 "You're learning that growth happens outside your comfort zone.",REFLECTION
-"You celebrate others' successes genuinely - that shows character.",CHARACTER
 "You stand up for what's right even when it's difficult.",CHARACTER
-"Your integrity is unwavering, and people notice that.",CHARACTER
 "You treat everyone with respect regardless of their status.",CHARACTER
 "You're building a life based on your values, not others' expectations.",CHARACTER
 "Your kindness is a conscious choice you make every day.",CHARACTER
 "You're getting better at setting healthy boundaries.",GROWTH
 "You're learning to balance caring for others with caring for yourself.",GROWTH
-"Every mistake teaches you something valuable about life.",GROWTH
 "You're becoming more comfortable with uncertainty.",GROWTH
-"Your resilience is quietly inspiring to everyone who knows you.",GROWTH
 "You're writing your own story with intention and purpose.",GROWTH`;
 
   // Parse CSV data
