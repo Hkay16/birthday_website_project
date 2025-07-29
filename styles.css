@@ -1881,7 +1881,7 @@ body.terminal-hidden {
   
   .epic-birthday-title {
     font-size: clamp(1.8rem, 8vw, 2.5rem);
-    letter-spacing: 1px;
+  letter-spacing: 1px;
   }
   
   .epic-birthday-name {

@@ -962,6 +962,72 @@ function initAffirmationsDemo() {
 
   // Update the description text to show actual count
   updateAffirmationsDescription();
+
+  generateBtn.addEventListener("click", () => {
+    if (allAffirmations.length === 0) return; // Wait for affirmations to load
+
+    // If we've used all affirmations, reset and reshuffle
+    if (currentIndex >= allAffirmations.length) {
+      allAffirmations.forEach((affirmation) => (affirmation.used = false));
+      shuffleArray(allAffirmations);
+      currentIndex = 0;
+    }
+
+    // Get the next unused affirmation
+    const selectedAffirmation = allAffirmations[currentIndex];
+
+    // Simple fade transition without multiple animations
+    currentAffirmation.style.opacity = "0.3";
+    setTimeout(() => {
+      currentAffirmation.textContent = `"${selectedAffirmation.text}"`;
+      currentAffirmation.style.opacity = "1";
+    }, 150);
+
+    selectedAffirmation.used = true;
+    currentIndex++;
+
+    count++;
+    updateCounterDisplay();
+    currentMoodText.textContent = formatMoodText(selectedAffirmation.mood);
+  });
+
+  aboutBtn.addEventListener("click", () => {
+    showAbout = !showAbout;
+    aboutBtn.textContent = showAbout ? "Hide Details" : "About Affirmations";
+    updateAboutContent();
+  });
+
+  // Function to format mood text for display
+  function formatMoodText(mood) {
+    const moodMap = {
+      CONFIDENT: "CONFIDENT",
+      ENCOURAGING: "ENCOURAGING",
+      SUPPORTIVE: "SUPPORTIVE",
+      MOTIVATING: "MOTIVATING",
+      CALMING: "CALMING",
+      SELF_CARE: "SELF CARE",
+      HOPEFUL: "HOPEFUL",
+      AFFIRMING: "AFFIRMING",
+      GENUINE: "GENUINE",
+      APPRECIATIVE: "APPRECIATIVE",
+      BIRTHDAY: "BIRTHDAY",
+      LEARNING: "LEARNING",
+      PSYCHOLOGY: "PSYCHOLOGY",
+      FRIENDSHIP: "FRIENDSHIP",
+      CHARACTER: "CHARACTER",
+      GROWTH: "GROWTH",
+      REFLECTION: "REFLECTION",
+      INSPIRING: "INSPIRING",
+    };
+    return moodMap[mood] || mood;
+  }
+
+  // Function to update counter display with proper singular/plural
+  function updateCounterDisplay() {
+    const reminderText =
+      count === 1 ? "gentle reminder shared" : "gentle reminders shared";
+    reminderCountText.textContent = `${count} ${reminderText}`;
+  }
 }
 
 // Description stays static - no count needed
@@ -1015,95 +1081,27 @@ function updateAboutContent() {
     aboutDiv.style.marginRight = "auto";
 
     aboutDiv.innerHTML = `
-      <h3 style="color: #87CEEB; margin-top: 0; font-size: 16px;">Why This Actually Works</h3>
-      <p style="margin: 10px 0;">Your brain physically changes based on what you think about repeatedly. Neuroscientists call this "neuroplasticity" - your brain's ability to rewire itself throughout your life.</p>
-      
-      <p style="margin: 10px 0;">When you read positive, true statements about yourself, you're literally building new neural pathways. After weeks of repetition, your brain starts to default to these healthier thought patterns instead of negative self-talk.</p>
-      
-      <p style="margin: 10px 0;">These aren't just "feel good" messages. They're carefully written to counter specific negative thoughts that many people struggle with - feeling forgotten, doubting your worth, or getting stuck in comparison loops.</p>
-      
-      <p style="margin: 10px 0; font-style: italic; color: #9BB5CE;">The key is consistency, not perfection. Even when you don't fully believe it yet, reading something true about yourself plants seeds that grow over time.</p>
-      
-      <div style="margin-top: 15px; padding: 10px; background: rgba(135, 206, 235, 0.1); border-radius: 8px; font-size: 12px; max-width: 600px; margin-left: auto; margin-right: auto;">
-        <strong>Approach:</strong> No repeats until you've seen them all<br>
-        <strong>Focus:</strong> Genuine statements, not generic positivity<br>
-        <strong>Goal:</strong> Rewire your brain toward self-compassion
-      </div>
-    `;
+        <h3 style="color: #87CEEB; margin-top: 0; font-size: 16px;">Why This Actually Works</h3>
+        <p style="margin: 10px 0;">Your brain physically changes based on what you think about repeatedly. Neuroscientists call this "neuroplasticity" - your brain's ability to rewire itself throughout your life.</p>
+        
+        <p style="margin: 10px 0;">When you read positive, true statements about yourself, you're literally building new neural pathways. After weeks of repetition, your brain starts to default to these healthier thought patterns instead of negative self-talk.</p>
+        
+        <p style="margin: 10px 0;">These aren't just "feel good" messages. They're carefully written to counter specific negative thoughts that many people struggle with - feeling forgotten, doubting your worth, or getting stuck in comparison loops.</p>
+        
+        <p style="margin: 10px 0; font-style: italic; color: #9BB5CE;">The key is consistency, not perfection. Even when you don't fully believe it yet, reading something true about yourself plants seeds that grow over time.</p>
+        
+        <div style="margin-top: 15px; padding: 10px; background: rgba(135, 206, 235, 0.1); border-radius: 8px; font-size: 12px; max-width: 600px; margin-left: auto; margin-right: auto;">
+          <strong>Approach:</strong> No repeats until you've seen them all<br>
+          <strong>Focus:</strong> Genuine statements, not generic positivity<br>
+          <strong>Goal:</strong> Rewire your brain toward self-compassion
+        </div>
+      `;
 
     // Insert after the entire affirmations container, not inside it
     const affirmationsView = document.getElementById("affirmations-view");
     affirmationsView.appendChild(aboutDiv);
   }
 }
-
-generateBtn.addEventListener("click", () => {
-  if (allAffirmations.length === 0) return; // Wait for affirmations to load
-
-  // If we've used all affirmations, reset and reshuffle
-  if (currentIndex >= allAffirmations.length) {
-    allAffirmations.forEach((affirmation) => (affirmation.used = false));
-    shuffleArray(allAffirmations);
-    currentIndex = 0;
-  }
-
-  // Get the next unused affirmation
-  const selectedAffirmation = allAffirmations[currentIndex];
-
-  // Simple fade transition without multiple animations
-  currentAffirmation.style.opacity = "0.3";
-  setTimeout(() => {
-    currentAffirmation.textContent = `"${selectedAffirmation.text}"`;
-    currentAffirmation.style.opacity = "1";
-  }, 150);
-
-  selectedAffirmation.used = true;
-  currentIndex++;
-
-  count++;
-  updateCounterDisplay();
-  currentMoodText.textContent = formatMoodText(selectedAffirmation.mood);
-});
-
-aboutBtn.addEventListener("click", () => {
-  showAbout = !showAbout;
-  aboutBtn.textContent = showAbout ? "Hide Details" : "About Affirmations";
-  updateAboutContent();
-});
-
-// Function to format mood text for display
-function formatMoodText(mood) {
-  const moodMap = {
-    CONFIDENT: "CONFIDENT",
-    ENCOURAGING: "ENCOURAGING",
-    SUPPORTIVE: "SUPPORTIVE",
-    MOTIVATING: "MOTIVATING",
-    CALMING: "CALMING",
-    SELF_CARE: "SELF CARE",
-    HOPEFUL: "HOPEFUL",
-    AFFIRMING: "AFFIRMING",
-    GENUINE: "GENUINE",
-    APPRECIATIVE: "APPRECIATIVE",
-    BIRTHDAY: "BIRTHDAY",
-    LEARNING: "LEARNING",
-    PSYCHOLOGY: "PSYCHOLOGY",
-    FRIENDSHIP: "FRIENDSHIP",
-    CHARACTER: "CHARACTER",
-    GROWTH: "GROWTH",
-    REFLECTION: "REFLECTION",
-    INSPIRING: "INSPIRING",
-  };
-  return moodMap[mood] || mood;
-}
-
-// Function to update counter display with proper singular/plural
-function updateCounterDisplay() {
-  const reminderText =
-    count === 1 ? "gentle reminder shared" : "gentle reminders shared";
-  reminderCountText.textContent = `${count} ${reminderText}`;
-}
-
-// Load affirmations from CSV file with fallback
 
 // 3D Particle Universe Preview
 function initSculpturePreview() {
